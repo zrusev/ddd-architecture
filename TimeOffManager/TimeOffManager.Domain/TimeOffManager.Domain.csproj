@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Vacations\Models\Requesters\" />
-    <Folder Include="Vacations\Models\Requests\" />
     <Folder Include="Vacations\Factories\" />
     <Folder Include="Vacations\Exceptions\" />
     <Folder Include="Vacations\Events\" />
