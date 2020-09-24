@@ -18,4 +18,15 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Vacations\Requesters\Commands\" />
+    <Folder Include="Vacations\Requesters\Queries\" />
+    <Folder Include="Vacations\Requests\Commands\" />
+    <Folder Include="Vacations\Requests\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TimeOffManager.Domain\TimeOffManager.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

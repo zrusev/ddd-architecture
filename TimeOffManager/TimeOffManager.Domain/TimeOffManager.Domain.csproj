@@ -22,11 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Vacations\Factories\" />
     <Folder Include="Vacations\Exceptions\" />
-    <Folder Include="Vacations\Events\" />
     <Folder Include="Vacations\Specifications\" />
-    <Folder Include="Vacations\Repositories\" />
   </ItemGroup>
 
 </Project>

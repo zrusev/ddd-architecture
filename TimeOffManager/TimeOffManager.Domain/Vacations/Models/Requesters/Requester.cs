@@ -3,15 +3,15 @@
     using Common;
     using Common.Models;
 
-    public class Requesters : Entity<int>, IAggregateRoot
+    public class Requester : Entity<int>, IAggregateRoot
     {
-        internal Requesters(Employee requester, Team team)
+        internal Requester(Employee employee, Team team)
         {
-            this.Requester = requester;
+            this.Employee = employee;
             this.Team = team;
         }
 
-        public Employee Requester { get; set; }
+        public Employee Employee { get; set; }
 
         public Team Team { get; set; }
     }
