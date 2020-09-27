@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Vacations\Exceptions\" />
     <Folder Include="Vacations\Specifications\" />
   </ItemGroup>
 

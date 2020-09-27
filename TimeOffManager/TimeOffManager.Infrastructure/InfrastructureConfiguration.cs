@@ -14,6 +14,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
+    using TimeOffManager.Application.Common.Contracts;
     using Vacations;
 
     public static class InfrastructureConfiguration

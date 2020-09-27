@@ -1,16 +1,15 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Models.Requesters
 {
-    using Common.Models;
+    using TimeOffManager.Domain.Common.Models;
 
-    public class Employee : Entity<int>
+    public class Employee : ValueObject
     {
-        public Employee(
+        internal Employee(
             string firstName,
             string lastName,
             string employeeId,
             string email,
-            string imageUrl,
-            Employee manager
+            string imageUrl
             )
         {
             this.FirstName = firstName;
@@ -18,7 +17,6 @@
             this.EmployeeId = employeeId;
             this.Email = email;
             this.ImageUrl = imageUrl;
-            this.Manager = manager;
         }
 
         public string FirstName { get; private set; }
@@ -30,7 +28,5 @@
         public string Email { get; private set; }
 
         public string ImageUrl { get; private set; }
-
-        public Employee Manager { get; private set; }
     }
 }

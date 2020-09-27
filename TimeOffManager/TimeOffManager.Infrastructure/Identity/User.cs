@@ -1,8 +1,9 @@
 ﻿namespace TimeOffManager.Infrastructure.Identity
 {
     using Application.Identity;
+    using Domain.Vacations.Exceptions;
+    using Domain.Vacations.Models.Requesters;
     using Microsoft.AspNetCore.Identity;
-    using TimeOffManager.Domain.Vacations.Models.Requesters;
 
     public class User : IdentityUser, IUser
     {
@@ -12,14 +13,14 @@
 
         public Requester? Requester { get; private set; }
 
-        public void BecomeDealer(Requester requester)
+        public void BecomeRequester(Requester requester)
         {
             if (this.Requester != null)
             {
-                // throw new InvalidDealerException($"User '{this.UserName}' is already a requester.");
+                throw new InvalidRequesterException($"User '{this.UserName}' is already an requester.");
             }
 
             this.Requester = requester;
-        }
+        }        
     }
 }

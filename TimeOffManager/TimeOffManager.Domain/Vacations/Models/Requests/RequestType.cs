@@ -4,10 +4,19 @@
 
     public class RequestType : Entity<int>
     {
-        internal RequestType(string name, string description)
+        internal RequestType(
+            string name,
+            string description
+            )
         {
             this.Name = name;
             this.Description = description;
+        }
+
+        private RequestType()
+        {
+            this.Name = default!;
+            this.Description = default!;
         }
 
         public string Name { get; }

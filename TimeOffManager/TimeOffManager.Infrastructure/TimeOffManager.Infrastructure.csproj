@@ -28,8 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Persistence\Migrations\" />
-    <Folder Include="Vacations\Configuration\" />
-    <Folder Include="Vacations\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

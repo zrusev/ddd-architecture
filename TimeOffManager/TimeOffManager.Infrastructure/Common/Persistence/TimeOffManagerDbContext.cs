@@ -36,8 +36,6 @@
 
         public DbSet<Requester> Requesters { get; set; } = default!;
 
-        public DbSet<Employee> Employees { get; set; } = default!;
-
         public DbSet<Team> Teams { get; set; } = default!;
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

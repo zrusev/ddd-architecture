@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Vacations\Requesters\Commands\" />
-    <Folder Include="Vacations\Requesters\Queries\" />
     <Folder Include="Vacations\Requests\Commands\" />
     <Folder Include="Vacations\Requests\Queries\" />
   </ItemGroup>
