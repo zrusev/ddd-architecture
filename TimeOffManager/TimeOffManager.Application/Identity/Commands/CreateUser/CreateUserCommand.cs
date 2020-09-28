@@ -55,7 +55,7 @@
                 var requester = this.requesterFactory
                     .WithFirstName(request.FirstName)
                     .WithLastName(request.LastName)
-                    .WithLastEmployeeId(request.EmployeeId)
+                    .WithEmployeeId(request.EmployeeId)
                     .WithEmail(request.Email)
                     .WithImageUrl(request.ImageUrl)
                     .WithManager(request.Manager)

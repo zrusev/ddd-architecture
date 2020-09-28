@@ -30,7 +30,7 @@
             return this;
         }
 
-        public IRequesterFactory WithLastEmployeeId(string employeeId)
+        public IRequesterFactory WithEmployeeId(string employeeId)
         {
             this.employeeId = employeeId;
 
@@ -79,7 +79,7 @@
             => this
                 .WithFirstName(firstName)
                 .WithLastName(lastName)
-                .WithLastEmployeeId(employeeId)
+                .WithEmployeeId(employeeId)
                 .WithEmail(email)
                 .WithImageUrl(imageUrl)
                 .WithManager(manager)

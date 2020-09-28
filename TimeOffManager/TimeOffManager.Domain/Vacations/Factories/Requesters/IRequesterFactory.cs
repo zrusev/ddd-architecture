@@ -9,11 +9,11 @@
 
         IRequesterFactory WithLastName(string lastName);
 
-        IRequesterFactory WithLastEmployeeId(string employeeId);
+        IRequesterFactory WithEmployeeId(string employeeId);
 
         IRequesterFactory WithEmail(string email);
 
-        public IRequesterFactory WithImageUrl(string imageUrl);
+        IRequesterFactory WithImageUrl(string imageUrl);
 
         IRequesterFactory WithManager(Employee manager);
 
