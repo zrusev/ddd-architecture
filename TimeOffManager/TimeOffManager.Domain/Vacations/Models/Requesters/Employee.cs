@@ -52,8 +52,8 @@
 
         public string ImageUrl { get; private set; }
 
-        public Employee Manager { get; private set; }
+        public Employee? Manager { get; private set; }
 
-        public Team Team { get; private set; }
+        public Team? Team { get; private set; }
     }
 }

@@ -36,7 +36,7 @@
                 .ForMember(d => d.ImageUrl, cfg => cfg
                     .MapFrom(d => d.Employee.ImageUrl))
                 .ForMember(d => d.ManagerEmail, cfg => cfg
-                    .MapFrom(d => d.Employee.Manager.Email))
+                    .MapFrom(d => d.Employee.Manager!.Email))
                 .ForMember(d => d.TeamName, cfg => cfg
                     .MapFrom(d => d.Employee.Team!.Name));
     }

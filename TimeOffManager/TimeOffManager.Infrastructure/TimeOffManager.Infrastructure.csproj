@@ -14,6 +14,8 @@
     <Compile Remove="Common\Persistence\Migrations\20200928144050_InitialMigration.Designer.cs" />
     <Compile Remove="Common\Persistence\Migrations\20200928144859_InitialMigration.cs" />
     <Compile Remove="Common\Persistence\Migrations\20200928144859_InitialMigration.Designer.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928192934_ModelsMigration.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928192934_ModelsMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

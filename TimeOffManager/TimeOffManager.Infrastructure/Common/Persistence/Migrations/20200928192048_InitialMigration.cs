@@ -80,8 +80,8 @@
                     EmployeeId = table.Column<string>(maxLength: 6, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: false),
                     ImageUrl = table.Column<string>(maxLength: 2048, nullable: false),
-                    ManagerId = table.Column<int>(nullable: false),
-                    TeamId = table.Column<int>(nullable: false)
+                    ManagerId = table.Column<int>(nullable: true),
+                    TeamId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

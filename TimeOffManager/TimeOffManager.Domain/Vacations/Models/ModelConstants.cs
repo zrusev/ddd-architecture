@@ -11,6 +11,7 @@
             public const int MaxEmailLength = 50;
             public const int MaxUrlLength = 2048;
             public const int Zero = 0;
+            public const int MaxDescriptionLength = 1000;
         }
 
         public class RequestType

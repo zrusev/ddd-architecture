@@ -19,11 +19,9 @@
                 .HasMaxLength(MaxNameLength);
 
             builder
-                .HasMany(d => d.Members)
-                .WithOne()
-                .Metadata
-                .PrincipalToDependent
-                .SetField("members");
+                .Property(p => p.Description)
+                .IsRequired()
+                .HasMaxLength(MaxDescriptionLength);
         }
     }
 }
