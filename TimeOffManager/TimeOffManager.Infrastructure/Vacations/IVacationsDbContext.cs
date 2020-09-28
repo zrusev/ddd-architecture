@@ -14,6 +14,8 @@
 
         DbSet<Requester> Requesters { get; }
 
+        DbSet<Employee> Employees { get; }
+
         DbSet<Team> Teams { get; }
 
         DbSet<User> Users { get; } // TODO: Temporary workaround

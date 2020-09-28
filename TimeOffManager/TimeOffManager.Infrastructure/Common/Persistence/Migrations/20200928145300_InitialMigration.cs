@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
+﻿namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,7 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(maxLength: 2000, nullable: false)
                 },
                 constraints: table =>
@@ -41,12 +41,7 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
-                    Manager_FirstName = table.Column<string>(maxLength: 20, nullable: true),
-                    Manager_LastName = table.Column<string>(maxLength: 20, nullable: true),
-                    Manager_EmployeeId = table.Column<string>(maxLength: 6, nullable: true),
-                    Manager_Email = table.Column<string>(maxLength: 50, nullable: true),
-                    Manager_ImageUrl = table.Column<string>(maxLength: 2048, nullable: true)
+                    Name = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,37 +70,51 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
+                    LastName = table.Column<string>(maxLength: 20, nullable: false),
+                    EmployeeId = table.Column<string>(maxLength: 6, nullable: false),
+                    Email = table.Column<string>(maxLength: 50, nullable: false),
+                    ImageUrl = table.Column<string>(maxLength: 2048, nullable: false),
+                    ManagerId = table.Column<int>(nullable: false),
+                    TeamId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Employees_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employees_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Requesters",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Employee_FirstName = table.Column<string>(maxLength: 20, nullable: true),
-                    Employee_LastName = table.Column<string>(maxLength: 20, nullable: true),
-                    Employee_EmployeeId = table.Column<string>(maxLength: 6, nullable: true),
-                    Employee_Email = table.Column<string>(maxLength: 50, nullable: true),
-                    Employee_ImageUrl = table.Column<string>(maxLength: 2048, nullable: true),
-                    Manager_FirstName = table.Column<string>(nullable: true),
-                    Manager_LastName = table.Column<string>(nullable: true),
-                    Manager_EmployeeId = table.Column<string>(nullable: true),
-                    Manager_Email = table.Column<string>(nullable: true),
-                    Manager_ImageUrl = table.Column<string>(nullable: true),
-                    TeamId = table.Column<int>(nullable: true),
-                    TeamId1 = table.Column<int>(nullable: true)
+                    EmployeeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Requesters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Requesters_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Requesters_Teams_TeamId1",
-                        column: x => x.TeamId1,
-                        principalTable: "Teams",
+                        name: "FK_Requesters_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -311,14 +320,19 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                 filter: "[RequesterId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requesters_TeamId",
-                table: "Requesters",
+                name: "IX_Employees_ManagerId",
+                table: "Employees",
+                column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_TeamId",
+                table: "Employees",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requesters_TeamId1",
+                name: "IX_Requesters_EmployeeId",
                 table: "Requesters",
-                column: "TeamId1");
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_Options_RequestTypeId",
@@ -362,6 +376,9 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Requesters");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Teams");

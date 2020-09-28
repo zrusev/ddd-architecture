@@ -99,9 +99,9 @@
                             this.lastName, 
                             this.employeeId, 
                             this.email, 
-                            this.imageUrl),
-                    this.manager,
-                    this.team);
+                            this.imageUrl,
+                            this.manager,
+                            this.team));
         }
     }
 }

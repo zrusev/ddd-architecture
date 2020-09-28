@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Persistence\Migrations\20200928143700_EmployeeMigration.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928143700_EmployeeMigration.Designer.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928144050_InitialMigration.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928144050_InitialMigration.Designer.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928144859_InitialMigration.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20200928144859_InitialMigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectCapability Include="DynamicFileNesting" />
   </ItemGroup>
 
@@ -24,10 +33,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\Persistence\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

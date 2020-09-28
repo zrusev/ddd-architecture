@@ -10,7 +10,7 @@ using TimeOffManager.Infrastructure.Common.Persistence;
 namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
 {
     [DbContext(typeof(TimeOffManagerDbContext))]
-    [Migration("20200927193043_InitialMigration")]
+    [Migration("20200928145300_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,6 +152,53 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(6)")
+                        .HasMaxLength(6);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(2048)")
+                        .HasMaxLength(2048);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Employees");
+                });
+
             modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requesters.Requester", b =>
                 {
                     b.Property<int>("Id")
@@ -159,17 +206,12 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TeamId1")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId");
-
-                    b.HasIndex("TeamId1");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Requesters");
                 });
@@ -245,8 +287,8 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -376,135 +418,28 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requesters.Requester", b =>
+            modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", b =>
                 {
+                    b.HasOne("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TimeOffManager.Domain.Vacations.Models.Requesters.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("TimeOffManager.Domain.Vacations.Models.Requesters.Team", null)
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId1")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.OwnsOne("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", "Employee", b1 =>
-                        {
-                            b1.Property<int>("RequesterId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Email")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(50)")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("EmployeeId")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(6)")
-                                .HasMaxLength(6);
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(20)")
-                                .HasMaxLength(20);
-
-                            b1.Property<string>("ImageUrl")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(2048)")
-                                .HasMaxLength(2048);
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(20)")
-                                .HasMaxLength(20);
-
-                            b1.HasKey("RequesterId");
-
-                            b1.ToTable("Requesters");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RequesterId");
-                        });
-
-                    b.OwnsOne("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", "Manager", b1 =>
-                        {
-                            b1.Property<int>("RequesterId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Email")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("EmployeeId")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("ImageUrl")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("RequesterId");
-
-                            b1.ToTable("Requesters");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RequesterId");
-                        });
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requesters.Team", b =>
+            modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requesters.Requester", b =>
                 {
-                    b.OwnsOne("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", "Manager", b1 =>
-                        {
-                            b1.Property<int>("TeamId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Email")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(50)")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("EmployeeId")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(6)")
-                                .HasMaxLength(6);
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(20)")
-                                .HasMaxLength(20);
-
-                            b1.Property<string>("ImageUrl")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(2048)")
-                                .HasMaxLength(2048);
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(20)")
-                                .HasMaxLength(20);
-
-                            b1.HasKey("TeamId");
-
-                            b1.ToTable("Teams");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TeamId");
-                        });
+                    b.HasOne("TimeOffManager.Domain.Vacations.Models.Requesters.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TimeOffManager.Domain.Vacations.Models.Requests.Request", b =>

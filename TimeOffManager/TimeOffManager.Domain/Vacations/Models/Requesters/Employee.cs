@@ -2,9 +2,29 @@
 {
     using TimeOffManager.Domain.Common.Models;
 
-    public class Employee : ValueObject
+    public class Employee : Entity<int>
     {
         internal Employee(
+            string firstName,
+            string lastName,
+            string employeeId,
+            string email,
+            string imageUrl,
+            Employee manager,
+            Team team
+            )
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.EmployeeId = employeeId;
+            this.Email = email;
+            this.ImageUrl = imageUrl;
+
+            this.Manager = manager;
+            this.Team = team;
+        }
+
+        private Employee(
             string firstName,
             string lastName,
             string employeeId,
@@ -17,6 +37,9 @@
             this.EmployeeId = employeeId;
             this.Email = email;
             this.ImageUrl = imageUrl;
+
+            this.Manager = default!;
+            this.Team = default!;
         }
 
         public string FirstName { get; private set; }
@@ -28,5 +51,9 @@
         public string Email { get; private set; }
 
         public string ImageUrl { get; private set; }
+
+        public Employee Manager { get; private set; }
+
+        public Team Team { get; private set; }
     }
 }

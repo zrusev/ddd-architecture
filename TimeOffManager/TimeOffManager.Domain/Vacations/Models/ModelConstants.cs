@@ -15,7 +15,7 @@
 
         public class RequestType
         {
-            public const int MaxNameLength = 20;
+            public const int MaxNameLength = 50;
             public const int MaxDescriptionLength = 2000;
         }
 

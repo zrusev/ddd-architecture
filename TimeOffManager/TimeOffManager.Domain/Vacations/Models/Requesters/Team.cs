@@ -2,34 +2,21 @@
 {
     using Common.Models;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Team : Entity<int>
     {
-        internal Team(
-            string name, 
-            Employee manager
-            ) 
+        private readonly HashSet<Employee> members;
+        
+        internal Team(string name) 
         {
             this.Name = name;
-            this.Manager = manager;
 
-            this.Members = new HashSet<Requester>();
-        }
-
-        private Team(
-            string name
-            )
-        {
-            this.Name = name;
-            this.Manager = default!;
-
-            this.Members = new HashSet<Requester>();
+            this.members = new HashSet<Employee>();
         }
 
         public string Name { get; private set; }
 
-        public Employee Manager { get; private set; }
-
-        public HashSet<Requester> Members { get; private set; }
+        public IReadOnlyCollection<Employee> Members => this.members.ToList().AsReadOnly();
     }
 }

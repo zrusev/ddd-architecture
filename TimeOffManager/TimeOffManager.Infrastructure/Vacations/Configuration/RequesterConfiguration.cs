@@ -14,48 +14,9 @@
                 .HasKey(d => d.Id);
 
             builder
-                .OwnsOne(
-                    d => d.Employee,
-                    p =>
-                    {
-                        p.WithOwner();
-
-                        p.Property(pn => pn.FirstName)
-                            .IsRequired()
-                            .HasMaxLength(MaxNameLength);
-
-                        p.Property(pn => pn.LastName)
-                            .IsRequired()
-                            .HasMaxLength(MaxNameLength);
-
-                        p.Property(pn => pn.EmployeeId)
-                            .IsRequired()
-                            .HasMaxLength(EIDLength);
-
-                        p.Property(pn => pn.Email)
-                            .IsRequired()
-                            .HasMaxLength(MaxEmailLength);
-
-                        p.Property(pn => pn.ImageUrl)
-                            .IsRequired()
-                            .HasMaxLength(MaxUrlLength);
-                    }
-                );
-
-            builder
-                .OwnsOne(
-                    d => d.Manager,
-                    p =>
-                    {
-                        p.WithOwner();
-
-                        p.Property(pn => pn.Email);
-                    });
-
-            builder
-                .HasOne(c => c.Team)
+                .HasOne(d => d.Employee)
                 .WithMany()
-                .HasForeignKey("TeamId")
+                .HasForeignKey("EmployeeId")
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
