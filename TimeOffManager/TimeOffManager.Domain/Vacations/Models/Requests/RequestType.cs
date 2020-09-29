@@ -2,7 +2,7 @@
 {
     using Common.Models;
 
-    public class RequestType : Entity<int>
+    public class RequestType : ValueObject
     {
         internal RequestType(
             string name,

@@ -10,11 +10,13 @@
     {
         DbSet<Request> Requests { get; }
 
-        DbSet<RequestType> RequestTypes { get; }
-
         DbSet<Requester> Requesters { get; }
 
         DbSet<Employee> Employees { get; }
+
+        DbSet<NationalHolidays> NationalHolidays { get; }
+
+        DbSet<RequestDate> RequestDates { get;  }
 
         DbSet<Team> Teams { get; }
 

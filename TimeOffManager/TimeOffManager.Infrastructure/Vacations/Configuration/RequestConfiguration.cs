@@ -18,19 +18,16 @@
             .IsRequired();
 
             builder
-                .Property(p => p.From)
-                .IsRequired();
+                .OwnsOne(d => d.DateTimeRange, o =>
+                {
+                    o.WithOwner();
 
-            builder
-                .Property(p => p.Till)
-                .IsRequired();
+                    o.Property(op => op.Start);
+                    o.Property(op => op.End);
+                });
 
             builder
                 .Property(p => p.Days)
-                .IsRequired();
-
-            builder
-                .Property(p => p.Hours)
                 .IsRequired();
 
             builder
@@ -52,7 +49,6 @@
                     o.Property(op => op.ExcludeWeekends);
                     o.Property(op => op.ExcludeHolidays);
                 });
-
         }
     }
 }

@@ -5,12 +5,14 @@ namespace TimeOffManager.Infrastructure.Common.Persistence.Migrations
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Migrations;
     using System;
 
     [DbContext(typeof(TimeOffManagerDbContext))]
-    partial class TimeOffManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200929161745_RequestModelsUpdateMigration")]
+    partial class RequestModelsUpdateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

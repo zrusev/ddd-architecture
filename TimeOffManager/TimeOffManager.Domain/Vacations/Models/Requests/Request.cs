@@ -4,61 +4,48 @@
     using Common.Models;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Request: Entity<int>, IAggregateRoot
     {
-        private static readonly IEnumerable<RequestType> AllowedTypes
-            = new RequestTypeData().GetData().Cast<RequestType>();
-
         internal Request(
-            DateTime from,
-            DateTime till,
+            DateTimeRange dateTimeRange,
             int days,
-            TimeSpan hours,
+            HashSet<RequestDate> requestDates,
             string? requesterComment, 
             string? approverComment,
             Options options
             )
         {
-            //TODO: Validations
-
-            this.From = from;
-            this.Till = till;
+            this.DateTimeRange = dateTimeRange;
             this.Days = days;
-            this.Hours = hours;
+            this.RequestDates = requestDates;
             this.RequesterComment = requesterComment;
             this.ApproverComment = approverComment;
             this.Options = options;
         }
 
         private Request(
-            DateTime from,
-            DateTime till,
             int days,
-            TimeSpan hours,
             string? requesterComment,
             string? approverComment
             )
         {
-            this.From = from;
-            this.Till = till;
             this.Days = days;
-            this.Hours = hours;
             this.RequesterComment = requesterComment;
             this.ApproverComment = approverComment;
+
+            this.DateTimeRange = default!;
+            this.RequestDates = new HashSet<RequestDate>(new RequestDateComparer());
             this.Options = default!;
         }
 
         public DateTime RequestedOn { get; } = DateTime.Now;
 
-        public DateTime From { get; private set; }
-
-        public DateTime Till { get; private set; }
-
+        public DateTimeRange DateTimeRange { get; private set; }
+        
         public int Days { get; private set; }
 
-        public TimeSpan Hours { get; private set; }
+        public HashSet<RequestDate> RequestDates { get; private set; }
 
         public string? RequesterComment { get; private set; }
 
@@ -67,7 +54,6 @@
         public Options Options { get; private set; }
 
         public Request UpdateOptions(
-            RequestType requestType,
             bool isApproved,
             bool isPlanning,
             bool excludeHolidays,
@@ -75,7 +61,6 @@
             )
         {
             this.Options = new Options(
-                requestType,
                 isApproved,
                 isPlanning,
                 excludeHolidays,

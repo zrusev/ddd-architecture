@@ -2,17 +2,16 @@
 {
     using Models.Requests;
     using System;
+    using System.Collections.Generic;
 
     public class RequestFactory : IRequestFactory
     {
-        private DateTime from = default!;
-        private DateTime till = default!;
+        private DateTimeRange dateTimeRange = default!;
         private int days = default!;
-        private TimeSpan hours = default!;
+        private HashSet<RequestDate> requestDates = default!;
         private string? requesterComment = default!;
         private string? approverComment = default!;
         private Options options = default!;
-
 
         public IRequestFactory WithDays(int days)
         {
@@ -21,15 +20,7 @@
             return this;
         }
 
-        public IRequestFactory WithHours(TimeSpan hours)
-        {
-            this.hours = hours;
-
-            return this;
-        }
-
         public IRequestFactory WithOptions(
-            RequestType requestType,
             bool isApproved,
             bool isPlanning,
             bool excludeHolidays,
@@ -37,7 +28,6 @@
             )
         {
             this.options = new Options(
-                requestType,
                 isApproved,
                 isPlanning,
                 excludeHolidays,
@@ -46,10 +36,16 @@
             return this;
         }
 
-        public IRequestFactory WithPeriod(DateTime from, DateTime till)
+        public IRequestFactory WithPeriod(DateTime start, DateTime end)
         {
-            this.from = from;
-            this.till = till;
+            this.dateTimeRange = new DateTimeRange(start, end);
+
+            return this;
+        }
+
+        public IRequestFactory WithRequestDates(HashSet<RequestDate> requestDates)
+        {
+            this.requestDates = requestDates;
 
             return this;
         }
@@ -70,10 +66,9 @@
 
         public Request Build()
             => new Request(
-                this.from,
-                this.till,
+                this.dateTimeRange,
                 this.days,
-                this.hours,
+                this.requestDates,
                 this.requesterComment,
                 this.approverComment,
                 this.options);

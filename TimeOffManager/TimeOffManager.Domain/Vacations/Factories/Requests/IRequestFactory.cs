@@ -3,21 +3,21 @@
     using Common;
     using Models.Requests;
     using System;
+    using System.Collections.Generic;
 
     public interface IRequestFactory : IFactory<Request>
     {
-        IRequestFactory WithPeriod(DateTime from, DateTime till);
+        IRequestFactory WithPeriod(DateTime start, DateTime end);
 
         IRequestFactory WithDays(int days);
 
-        IRequestFactory WithHours(TimeSpan hours);
+        IRequestFactory WithRequestDates(HashSet<RequestDate> requestDates);
 
         IRequestFactory WithRequesterComment(string comment);
 
         IRequestFactory WithApproverComment(string comment);
 
         IRequestFactory WithOptions(
-            RequestType requestType,
             bool isApproved,
             bool isPlanning,
             bool excludeHolidays,

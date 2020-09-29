@@ -32,13 +32,15 @@
 
         public DbSet<Request> Requests { get; set; } = default!;
 
-        public DbSet<RequestType> RequestTypes { get; set; } = default!;
-
         public DbSet<Requester> Requesters { get; set; } = default!;
 
         public DbSet<Employee> Employees { get; set; } = default!;
 
         public DbSet<Team> Teams { get; set; } = default!;
+
+        public DbSet<NationalHolidays> NationalHolidays { get; set; } = default!;
+
+        public DbSet<RequestDate> RequestDates { get; set; } = default!;
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
