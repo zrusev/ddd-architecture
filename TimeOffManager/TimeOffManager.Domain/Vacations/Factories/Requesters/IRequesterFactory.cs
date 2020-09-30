@@ -2,6 +2,7 @@
 {
     using Common;
     using Models.Requesters;
+    using System;
 
     public interface IRequesterFactory : IFactory<Requester>
     {
@@ -18,5 +19,11 @@
         IRequesterFactory WithManager(Employee manager);
 
         IRequesterFactory WithTeam(Team team);
+
+        IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated);
+
+        IRequesterFactory WithHireDate(DateTime? hireDate);
+
+        IRequesterFactory WithLeaveDate(DateTime? leaveDate);
     }
 }

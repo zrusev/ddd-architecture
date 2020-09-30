@@ -14,8 +14,8 @@
                 .HasKey(d => d.Id);
             
             builder
-            .Property(p => p.RequestedOn)
-            .IsRequired();
+                .Property(p => p.RequestedOn)
+                .IsRequired();
 
             builder
                 .OwnsOne(d => d.DateTimeRange, o =>
@@ -38,7 +38,6 @@
                 .Property(p => p.ApproverComment)
                 .HasMaxLength(MaxCommentLength);
 
-
             builder
                 .OwnsOne(c => c.Options, o =>
                 {
@@ -48,6 +47,16 @@
                     o.Property(op => op.IsPlanning);
                     o.Property(op => op.ExcludeWeekends);
                     o.Property(op => op.ExcludeHolidays);
+                });
+
+            builder
+                .OwnsOne(c => c.PTOBalance, o =>
+                {
+                    o.WithOwner();
+
+                    o.Property(op => op.Initial);
+                    o.Property(op => op.Current);
+                    o.Property(op => op.Updated);
                 });
         }
     }

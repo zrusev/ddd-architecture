@@ -1,7 +1,9 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Factories.Requesters
 {
+    using Exceptions;
     using Models.Requesters;
-    using Vacations.Exceptions;
+    using Models.Shared;
+    using System;
 
     public class RequesterFactory : IRequesterFactory
     {
@@ -10,8 +12,11 @@
         private string employeeId = default!;
         private string email = default!;
         private string imageUrl = default!;
+        private DateTime? hireDate = default;
+        private DateTime? leaveDate = default;
         private Employee manager = default!;
         private Team team = default!;
+        private PTOBalance? pTOBalance = default!;
 
         private bool hasManagerFlag = false;
         private bool hasTeamFlag = false;
@@ -26,6 +31,20 @@
         public IRequesterFactory WithLastName(string lastName)
         {
             this.lastName = lastName;
+
+            return this;
+        }
+
+        public IRequesterFactory WithHireDate(DateTime? hireDate)
+        {
+            this.hireDate = hireDate;
+
+            return this;
+        }
+
+        public IRequesterFactory WithLeaveDate(DateTime? leaveDate)
+        {
+            this.leaveDate = leaveDate;
 
             return this;
         }
@@ -66,6 +85,12 @@
 
             return this;
         }
+        public IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated = null)
+        {
+            this.pTOBalance = new PTOBalance(initial, current, updated);
+
+            return this;
+        }
 
         public Requester Build(
             string firstName,
@@ -73,8 +98,12 @@
             string employeeId,
             string email,
             string imageUrl,
+            DateTime? hireDate,
+            DateTime? leaveDate,
             Employee manager,
-            Team team
+            Team team,
+            int? initial, 
+            int? current
             )
             => this
                 .WithFirstName(firstName)
@@ -82,8 +111,11 @@
                 .WithEmployeeId(employeeId)
                 .WithEmail(email)
                 .WithImageUrl(imageUrl)
+                .WithHireDate(hireDate)
+                .WithLeaveDate(leaveDate)
                 .WithManager(manager)
                 .WithTeam(team)
+                .WithPTOBalance(initial, current, null)
                 .Build();
 
         public Requester Build()
@@ -100,8 +132,12 @@
                             this.employeeId, 
                             this.email, 
                             this.imageUrl,
+                            this.hireDate,
+                            this.leaveDate,
+                            this.pTOBalance,
                             this.manager,
-                            this.team));
+                            this.team)
+                        );
         }
     }
 }

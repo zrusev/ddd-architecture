@@ -4,6 +4,7 @@
     using Common.Models;
     using System;
     using System.Collections.Generic;
+    using Vacations.Models.Shared;
 
     public class Request: Entity<int>, IAggregateRoot
     {
@@ -11,32 +12,39 @@
             DateTimeRange dateTimeRange,
             int days,
             HashSet<RequestDate> requestDates,
-            string? requesterComment, 
+            int? approverId,
+            string? requesterComment,
             string? approverComment,
-            Options options
+            Options options,
+            PTOBalance? pTOBalance
             )
         {
             this.DateTimeRange = dateTimeRange;
             this.Days = days;
             this.RequestDates = requestDates;
+            this.ApproverId = approverId;
             this.RequesterComment = requesterComment;
             this.ApproverComment = approverComment;
             this.Options = options;
+            this.PTOBalance = pTOBalance!;
         }
 
         private Request(
             int days,
+            int? approverId,
             string? requesterComment,
             string? approverComment
             )
         {
             this.Days = days;
+            this.ApproverId = approverId;
             this.RequesterComment = requesterComment;
             this.ApproverComment = approverComment;
 
             this.DateTimeRange = default!;
             this.RequestDates = new HashSet<RequestDate>(new RequestDateComparer());
             this.Options = default!;
+            this.PTOBalance = default!;
         }
 
         public DateTime RequestedOn { get; } = DateTime.Now;
@@ -47,11 +55,15 @@
 
         public HashSet<RequestDate> RequestDates { get; private set; }
 
+        public int? ApproverId { get; private set; }
+
         public string? RequesterComment { get; private set; }
 
         public string? ApproverComment { get; private set; }
 
         public Options Options { get; private set; }
+
+        public PTOBalance PTOBalance { get; private set; }
 
         public Request UpdateOptions(
             bool isApproved,

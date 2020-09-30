@@ -9,6 +9,10 @@
     {
         IRequestFactory WithPeriod(DateTime start, DateTime end);
 
+        IRequestFactory WithPTOBalance(int? initial, int? current, int? updated);
+
+        IRequestFactory WithApprover(int? approverId);
+
         IRequestFactory WithDays(int days);
 
         IRequestFactory WithRequestDates(HashSet<RequestDate> requestDates);

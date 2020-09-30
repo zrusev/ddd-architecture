@@ -46,6 +46,15 @@
                 .WithMany()
                 .HasForeignKey("TeamId")
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .OwnsOne(c => c.PTOBalance, o =>
+                {
+                    o.WithOwner();
+
+                    o.Property(op => op!.Initial);
+                    o.Property(op => op!.Current);
+                });
         }
     }
 }
