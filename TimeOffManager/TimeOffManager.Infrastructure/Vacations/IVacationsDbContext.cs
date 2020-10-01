@@ -18,6 +18,8 @@
 
         DbSet<RequestDate> RequestDates { get;  }
 
+        DbSet<RequestType> RequestTypes { get; }
+
         DbSet<Team> Teams { get; }
 
         DbSet<User> Users { get; } // TODO: Temporary workaround

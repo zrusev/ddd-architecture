@@ -42,6 +42,8 @@
 
         public DbSet<RequestDate> RequestDates { get; set; } = default!;
 
+        public DbSet<RequestType> RequestTypes { get; set; } = default!;
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             this.savesChangesTracker.Push(new object());

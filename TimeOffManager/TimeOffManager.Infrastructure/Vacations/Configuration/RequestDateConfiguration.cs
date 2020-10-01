@@ -20,22 +20,6 @@
             builder
                 .Property(h => h.Hours)
                 .IsRequired();
-
-            builder
-                .OwnsOne(d => d.RequestType, op =>
-                {
-                    op.WithOwner();
-
-                    op
-                        .Property(p => p.Name)
-                        .IsRequired()
-                        .HasMaxLength(MaxNameLength);
-
-                    op
-                        .Property(p => p.Description)
-                        .IsRequired()
-                        .HasMaxLength(MaxDescriptionLength);
-                });
         }
     }
 }

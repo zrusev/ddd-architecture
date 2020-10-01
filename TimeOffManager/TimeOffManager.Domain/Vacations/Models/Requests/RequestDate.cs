@@ -42,6 +42,6 @@
             => DateTime.Compare(x.Date, y.Date) == 0;
         
         public int GetHashCode([DisallowNull] RequestDate obj)
-            => obj.Date.GetHashCode();
+            => (obj.RequestType.Name.ToString() + obj.Date.ToString()).GetHashCode();
     }
 }
