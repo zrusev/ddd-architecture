@@ -38,9 +38,9 @@
 
     public class RequestDateComparer : IEqualityComparer<RequestDate>
     {
-        public bool Equals(RequestDate x, RequestDate y)
-            => DateTime.Compare(x.Date, y.Date) == 0;
-        
+        public bool Equals([AllowNull] RequestDate x, [AllowNull] RequestDate y)
+            => DateTime.Compare(x!.Date, y!.Date) == 0;
+
         public int GetHashCode([DisallowNull] RequestDate obj)
             => (obj.RequestType.Name.ToString() + obj.Date.ToString()).GetHashCode();
     }
