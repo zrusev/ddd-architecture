@@ -25,5 +25,7 @@
         IRequesterFactory WithHireDate(DateTime? hireDate);
 
         IRequesterFactory WithLeaveDate(DateTime? leaveDate);
+
+        IRequesterFactory FromUser(string userId);
     }
 }

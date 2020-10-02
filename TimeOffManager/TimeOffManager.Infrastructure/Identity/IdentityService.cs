@@ -1,13 +1,14 @@
 ﻿namespace TimeOffManager.Infrastructure.Identity
 {
-    using System.Linq;
-    using System.Threading.Tasks;
     using Application.Common;
     using Application.Identity;
     using Application.Identity.Commands;
     using Application.Identity.Commands.ChangePassword;
+    using Application.Identity.Commands.CreateUser;
     using Application.Identity.Commands.LoginUser;
     using Microsoft.AspNetCore.Identity;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     internal class IdentityService : IIdentity
     {
@@ -22,7 +23,7 @@
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<Result<IUser>> Register(UserInputModel userInput)
+        public async Task<Result<CreateUserSuccessModel>> Register(UserInputModel userInput)
         {
             var user = new User(userInput.Email);
 
@@ -31,8 +32,8 @@
             var errors = identityResult.Errors.Select(e => e.Description);
 
             return identityResult.Succeeded
-                ? Result<IUser>.SuccessWith(user)
-                : Result<IUser>.Failure(errors);
+                ? Result<CreateUserSuccessModel>.SuccessWith(new CreateUserSuccessModel(user.Id))
+                : Result<CreateUserSuccessModel>.Failure(errors);
         }
 
         public async Task<Result<LoginSuccessModel>> Login(UserInputModel userInput)

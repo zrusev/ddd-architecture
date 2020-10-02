@@ -16,6 +16,7 @@
         private Employee manager = default!;
         private Team team = default!;
         private PTOBalance? pTOBalance = default!;
+        private string requesterUserId = default!;
 
         public IRequesterFactory WithFirstName(string firstName)
         {
@@ -79,6 +80,7 @@
 
             return this;
         }
+
         public IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated = null)
         {
             this.pTOBalance = new PTOBalance(initial, current, updated);
@@ -86,9 +88,17 @@
             return this;
         }
 
+        public IRequesterFactory FromUser(string userId)
+        {
+            this.requesterUserId = userId;
+
+            return this;
+        }
+
         public Requester Build()
         {
             return new Requester(
+                        this.requesterUserId,
                         new Employee(
                             this.firstName, 
                             this.lastName, 

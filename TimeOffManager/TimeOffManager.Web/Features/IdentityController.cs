@@ -1,17 +1,17 @@
 ﻿namespace TimeOffManager.Web.Features
 {
-    using System.Threading.Tasks;
     using Application.Identity.Commands.ChangePassword;
     using Application.Identity.Commands.CreateUser;
     using Application.Identity.Commands.LoginUser;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     public class IdentityController : ApiController
     {
         [HttpPost]
         [Route(nameof(Register))]
-        public async Task<ActionResult> Register(
+        public async Task<ActionResult<CreateUserSuccessModel>> Register(
             CreateUserCommand command)
             => await this.Send(command);
 

@@ -10,19 +10,26 @@
     {
         private readonly HashSet<Request> requests;
 
-        internal Requester(Employee employee)
+        internal Requester(
+            string userId,
+            Employee employee
+            )
         {
+            this.UserId = userId;
             this.Employee = employee;
 
             this.requests = new HashSet<Request>();
         }
 
-        private Requester()
+        private Requester(string userId)
         {
+            this.UserId = userId;
             this.Employee = default!;
 
             this.requests = new HashSet<Request>();
         }
+
+        public string UserId { get; private set; }
 
         public Employee Employee { get; private set; }
 
