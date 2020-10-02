@@ -1,6 +1,5 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Factories.Requesters
 {
-    using Exceptions;
     using Models.Requesters;
     using Models.Shared;
     using System;
@@ -17,9 +16,6 @@
         private Employee manager = default!;
         private Team team = default!;
         private PTOBalance? pTOBalance = default!;
-
-        private bool hasManagerFlag = false;
-        private bool hasTeamFlag = false;
 
         public IRequesterFactory WithFirstName(string firstName)
         {
@@ -70,18 +66,16 @@
             return this;
         }
 
-        public IRequesterFactory WithManager(Employee manager)
+        public IRequesterFactory WithManager(Employee? manager)
         {
-            this.hasManagerFlag = true;
-            this.manager = manager;
+            this.manager = manager!;
 
             return this;
         }
 
-        public IRequesterFactory WithTeam(Team team)
+        public IRequesterFactory WithTeam(Team? team)
         {
-            this.hasTeamFlag = true;
-            this.team = team;
+            this.team = team!;
 
             return this;
         }
@@ -92,39 +86,8 @@
             return this;
         }
 
-        public Requester Build(
-            string firstName,
-            string lastName,
-            string employeeId,
-            string email,
-            string imageUrl,
-            DateTime? hireDate,
-            DateTime? leaveDate,
-            Employee manager,
-            Team team,
-            int? initial, 
-            int? current
-            )
-            => this
-                .WithFirstName(firstName)
-                .WithLastName(lastName)
-                .WithEmployeeId(employeeId)
-                .WithEmail(email)
-                .WithImageUrl(imageUrl)
-                .WithHireDate(hireDate)
-                .WithLeaveDate(leaveDate)
-                .WithManager(manager)
-                .WithTeam(team)
-                .WithPTOBalance(initial, current, null)
-                .Build();
-
         public Requester Build()
         {
-            if (!this.hasManagerFlag || !this.hasTeamFlag)
-            {
-                throw new InvalidRequesterException("Manager and team must have a value.");
-            }
-
             return new Requester(
                         new Employee(
                             this.firstName, 
@@ -136,8 +99,7 @@
                             this.leaveDate,
                             this.pTOBalance,
                             this.manager,
-                            this.team)
-                        );
+                            this.team));
         }
     }
 }

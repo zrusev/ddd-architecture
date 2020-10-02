@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public interface IRequesterRepository : IDomainRepository<Requester>
+    public interface IRequesterDomainRepository : IDomainRepository<Requester>
     {
         Task<Requester> FindByUser(string userId, CancellationToken cancellationToken = default);
     }

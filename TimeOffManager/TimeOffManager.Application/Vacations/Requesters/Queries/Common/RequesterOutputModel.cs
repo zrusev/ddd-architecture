@@ -18,9 +18,9 @@
 
         public string ImageUrl { get; private set; } = default!;
 
-        public string ManagerEmail { get; private set; } = default!;
+        public Employee? Manager { get; private set; } = default!;
 
-        public string TeamName { get; private set; } = default!;
+        public Team? Team { get; private set; } = default!;
 
         public virtual void Mapping(Profile mapper)
             => mapper
@@ -35,9 +35,9 @@
                     .MapFrom(d => d.Employee.Email))
                 .ForMember(d => d.ImageUrl, cfg => cfg
                     .MapFrom(d => d.Employee.ImageUrl))
-                .ForMember(d => d.ManagerEmail, cfg => cfg
-                    .MapFrom(d => d.Employee.Manager!.Email))
-                .ForMember(d => d.TeamName, cfg => cfg
-                    .MapFrom(d => d.Employee.Team!.Name));
+                .ForMember(d => d.Manager, cfg => cfg
+                    .MapFrom(d => d.Employee.Manager))
+                .ForMember(d => d.Team, cfg => cfg
+                    .MapFrom(d => d.Employee.Team));
     }
 }

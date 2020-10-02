@@ -15,8 +15,8 @@
             DateTime? hireDate,
             DateTime? leaveDate,
             PTOBalance? pTOBalance,
-            Employee manager,
-            Team team
+            Employee? manager,
+            Team? team
             )
         {
             this.FirstName = firstName;

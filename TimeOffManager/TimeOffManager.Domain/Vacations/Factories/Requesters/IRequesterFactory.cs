@@ -16,9 +16,9 @@
 
         IRequesterFactory WithImageUrl(string imageUrl);
 
-        IRequesterFactory WithManager(Employee manager);
+        IRequesterFactory WithManager(Employee? manager);
 
-        IRequesterFactory WithTeam(Team team);
+        IRequesterFactory WithTeam(Team? team);
 
         IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated);
 

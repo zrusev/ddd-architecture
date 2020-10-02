@@ -1,5 +1,6 @@
 ﻿namespace TimeOffManager.Infrastructure.Vacations.Repositories
 {
+    using Application.Vacations.Requesters;
     using Application.Vacations.Requesters.Queries.Common;
     using AutoMapper;
     using Common.Persistence;
@@ -14,7 +15,9 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class RequesterRepository : DataRepository<IVacationsDbContext, Requester>, IRequesterRepository
+    internal class RequesterRepository : DataRepository<IVacationsDbContext, Requester>, 
+        IRequesterDomainRepository, 
+        IRequesterQueryRepository
     {
         private readonly IMapper mapper;
 
@@ -59,5 +62,15 @@
                     .All()
                     .Where(d => d.Requests.Any(c => c.Id == requestId)))
                 .SingleOrDefaultAsync(cancellationToken);
+
+        public async Task<Employee> FindByManagerId(int managerId, CancellationToken cancellationToken = default)
+            => await this.Data
+                .Employees
+                .FirstOrDefaultAsync(i => i.Id == managerId, cancellationToken);
+
+        public async Task<Team> FindByTeamId(int teamId, CancellationToken cancellationToken = default)
+            => await this.Data
+                .Teams
+                .FirstOrDefaultAsync(i => i.Id == teamId, cancellationToken);
     }
 }

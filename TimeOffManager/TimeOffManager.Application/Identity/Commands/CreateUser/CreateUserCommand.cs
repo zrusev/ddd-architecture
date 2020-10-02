@@ -2,12 +2,12 @@
 {
     using Common;
     using Domain.Vacations.Factories.Requesters;
-    using Domain.Vacations.Models.Requesters;
     using Domain.Vacations.Repositories;
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
-    
+    using Vacations.Requesters;
+
     public class CreateUserCommand : UserInputModel, IRequest<Result>
     {
         public string FirstName { get; set; } = default!;
@@ -18,25 +18,28 @@
 
         public string ImageUrl { get; set; } = default!;
 
-        public Employee Manager { get; set; } = default!;
+        public int ManagerId { get; set; } = default!;
 
-        public Team Team { get; set; } = default!;
+        public int TeamId { get; set; } = default!;
 
         public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result>
         {
             private readonly IIdentity identity;
             private readonly IRequesterFactory requesterFactory;
-            private readonly IRequesterRepository requesterRepository;
+            private readonly IRequesterDomainRepository requesterRepository;
+            private readonly IRequesterQueryRepository requesterQueryRepository;
 
             public CreateUserCommandHandler(
                 IIdentity identity,
                 IRequesterFactory requesterFactory,
-                IRequesterRepository requesterRepository
+                IRequesterDomainRepository requesterRepository,
+                IRequesterQueryRepository requesterQueryRepository
                 )
             {
                 this.identity = identity;
                 this.requesterFactory = requesterFactory;
                 this.requesterRepository = requesterRepository;
+                this.requesterQueryRepository = requesterQueryRepository;
             }
 
             public async Task<Result> Handle(
@@ -52,14 +55,18 @@
 
                 var user = result.Data;
 
+                var manager = await this.requesterQueryRepository.FindByManagerId(request.ManagerId);
+
+                var team = await this.requesterQueryRepository.FindByTeamId(request.TeamId);
+
                 var requester = this.requesterFactory
                     .WithFirstName(request.FirstName)
                     .WithLastName(request.LastName)
                     .WithEmployeeId(request.EmployeeId)
                     .WithEmail(request.Email)
                     .WithImageUrl(request.ImageUrl)
-                    .WithManager(request.Manager)
-                    .WithTeam(request.Team)
+                    .WithManager(manager)
+                    .WithTeam(team)
                     .Build();
 
                 user.BecomeRequester(requester);

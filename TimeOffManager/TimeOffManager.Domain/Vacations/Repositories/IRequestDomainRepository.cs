@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public interface IRequestRepository : IDomainRepository<Request>
+    public interface IRequestDomainRepository : IDomainRepository<Request>
     {
         Task<Request> Find(int id, CancellationToken cancellationToken = default);
     }
