@@ -22,6 +22,44 @@
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NationalHolidays",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NationalHolidays", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RequestTypes",
                 columns: table => new
                 {
@@ -41,7 +79,8 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 20, nullable: false)
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,125 +106,6 @@
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
-                    LastName = table.Column<string>(maxLength: 20, nullable: false),
-                    EmployeeId = table.Column<string>(maxLength: 6, nullable: false),
-                    Email = table.Column<string>(maxLength: 50, nullable: false),
-                    ImageUrl = table.Column<string>(maxLength: 2048, nullable: false),
-                    ManagerId = table.Column<int>(nullable: true),
-                    TeamId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employees_Employees_ManagerId",
-                        column: x => x.ManagerId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employees_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Requesters",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requesters", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Requesters_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    RequesterId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Requesters_RequesterId",
-                        column: x => x.RequesterId,
-                        principalTable: "Requesters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Requests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RequestedOn = table.Column<DateTime>(nullable: false),
-                    From = table.Column<DateTime>(nullable: false),
-                    Till = table.Column<DateTime>(nullable: false),
-                    Days = table.Column<int>(nullable: false),
-                    Hours = table.Column<TimeSpan>(nullable: false),
-                    RequesterComment = table.Column<string>(maxLength: 2000, nullable: true),
-                    ApproverComment = table.Column<string>(maxLength: 2000, nullable: true),
-                    Options_RequestTypeId = table.Column<int>(nullable: true),
-                    Options_IsApproved = table.Column<bool>(nullable: true),
-                    Options_IsPlanning = table.Column<bool>(nullable: true),
-                    Options_ExcludeHolidays = table.Column<bool>(nullable: true),
-                    Options_ExcludeWeekends = table.Column<bool>(nullable: true),
-                    RequesterId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Requests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Requests_RequestTypes_Options_RequestTypeId",
-                        column: x => x.Options_RequestTypeId,
-                        principalTable: "RequestTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Requests_Requesters_RequesterId",
-                        column: x => x.RequesterId,
-                        principalTable: "Requesters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,6 +193,129 @@
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
+                    LastName = table.Column<string>(maxLength: 20, nullable: false),
+                    EmployeeId = table.Column<string>(maxLength: 6, nullable: false),
+                    Email = table.Column<string>(maxLength: 50, nullable: false),
+                    ImageUrl = table.Column<string>(maxLength: 2048, nullable: false),
+                    HireDate = table.Column<DateTime>(nullable: true),
+                    LeaveDate = table.Column<DateTime>(nullable: true),
+                    PTOBalance_Initial = table.Column<int>(nullable: true),
+                    PTOBalance_Current = table.Column<int>(nullable: true),
+                    PTOBalance_Updated = table.Column<int>(nullable: true),
+                    ManagerId = table.Column<int>(nullable: true),
+                    TeamId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Employees_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employees_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Requesters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Requesters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Requesters_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Requesters_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Requests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RequestedOn = table.Column<DateTime>(nullable: false),
+                    DateTimeRange_Start = table.Column<DateTime>(nullable: true),
+                    DateTimeRange_End = table.Column<DateTime>(nullable: true),
+                    Days = table.Column<int>(nullable: false),
+                    ApproverId = table.Column<int>(nullable: true),
+                    RequesterComment = table.Column<string>(maxLength: 2000, nullable: true),
+                    ApproverComment = table.Column<string>(maxLength: 2000, nullable: true),
+                    Options_IsApproved = table.Column<bool>(nullable: true),
+                    Options_IsPlanning = table.Column<bool>(nullable: true),
+                    Options_ExcludeHolidays = table.Column<bool>(nullable: true),
+                    Options_ExcludeWeekends = table.Column<bool>(nullable: true),
+                    PTOBalance_Initial = table.Column<int>(nullable: true),
+                    PTOBalance_Current = table.Column<int>(nullable: true),
+                    PTOBalance_Updated = table.Column<int>(nullable: true),
+                    RequesterId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Requests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Requests_Requesters_RequesterId",
+                        column: x => x.RequesterId,
+                        principalTable: "Requesters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RequestDates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RequestTypeId = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Hours = table.Column<TimeSpan>(nullable: false),
+                    RequestId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RequestDates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RequestDates_Requests_RequestId",
+                        column: x => x.RequestId,
+                        principalTable: "Requests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RequestDates_RequestTypes_RequestTypeId",
+                        column: x => x.RequestTypeId,
+                        principalTable: "RequestTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -313,13 +356,6 @@
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_RequesterId",
-                table: "AspNetUsers",
-                column: "RequesterId",
-                unique: true,
-                filter: "[RequesterId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Employees_ManagerId",
                 table: "Employees",
                 column: "ManagerId");
@@ -330,14 +366,25 @@
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RequestDates_RequestId",
+                table: "RequestDates",
+                column: "RequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RequestDates_RequestTypeId",
+                table: "RequestDates",
+                column: "RequestTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Requesters_EmployeeId",
                 table: "Requesters",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_Options_RequestTypeId",
-                table: "Requests",
-                column: "Options_RequestTypeId");
+                name: "IX_Requesters_UserId",
+                table: "Requesters",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_RequesterId",
@@ -363,13 +410,16 @@
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Requests");
+                name: "NationalHolidays");
+
+            migrationBuilder.DropTable(
+                name: "RequestDates");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Requests");
 
             migrationBuilder.DropTable(
                 name: "RequestTypes");
@@ -379,6 +429,9 @@
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Teams");
