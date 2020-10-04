@@ -1,25 +1,31 @@
 ﻿namespace TimeOffManager.Application.Identity.Commands.LoginUser
 {
-    using System.Threading;
-    using System.Threading.Tasks;
     using Common;
     using MediatR;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Vacations.Requesters;
 
     public class LoginUserCommand : UserInputModel, IRequest<Result<LoginOutputModel>>
     {
         public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<LoginOutputModel>>
         {
             private readonly IIdentity identity;
+            private readonly IRequesterQueryRepository repository;
 
             public LoginUserCommandHandler(
-                IIdentity identity)
+                IIdentity identity,
+                IRequesterQueryRepository repository
+                )
             {
                 this.identity = identity;
+                this.repository = repository;
             }
 
             public async Task<Result<LoginOutputModel>> Handle(
                 LoginUserCommand request,
-                CancellationToken cancellationToken)
+                CancellationToken cancellationToken
+                )
             {
                 var result = await this.identity.Login(request);
 
@@ -30,9 +36,9 @@
 
                 var user = result.Data;
 
-                //var dealerId = await this.dealerRepository.GetDealerId(user.UserId, cancellationToken);
+                var requesterId = await this.repository.GetRequesterId(user.UserId, cancellationToken);
 
-                return new LoginOutputModel(user.Token, 0);
+                return new LoginOutputModel(user.Token, requesterId);
             }
         }
     }

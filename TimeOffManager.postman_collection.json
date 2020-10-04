@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "dd0c3bba-134c-4418-af6c-24af3bca38ee",
+		"name": "TimeOffManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Identity User Registration",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": " localhost:5001",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": " en-US,bg;q=0.5",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": " gzip, deflate, br",
+						"type": "text"
+					},
+					{
+						"key": "DNT",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": " keep-alive",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": " cookieconsent_status=dismiss",
+						"type": "text"
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Pragma",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Email\": \"test@test.com\",\n\t\"Password\": \"Test123!!!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Identity/Register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Identity",
+						"Register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requester Registration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjEyNWI1Zi0yN2E1LTRmZDQtODJiZC0xZjBhNWJjNmFkMDUiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jb20iLCJuYmYiOjE2MDE4MzY3MDEsImV4cCI6MTYwMjQ0MTUwMSwiaWF0IjoxNjAxODM2NzAxfQ.9l66_Pi4wCdCwTaicPlM8n6cB3EW4kbrHSQg7i1CaBI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": " localhost:5001",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": " en-US,bg;q=0.5",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": " gzip, deflate, br",
+						"type": "text"
+					},
+					{
+						"key": "DNT",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": " keep-alive",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": " cookieconsent_status=dismiss",
+						"type": "text"
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Pragma",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"User\",\n\t\"lastName\": \"Name\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/cat/\",\n    \"ManagerId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Requesters/Create",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Requesters",
+						"Create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Identity User Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": " localhost:5001",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": " en-US,bg;q=0.5",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": " gzip, deflate, br",
+						"type": "text"
+					},
+					{
+						"key": "DNT",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": " keep-alive",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": " cookieconsent_status=dismiss",
+						"type": "text"
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Pragma",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Email\": \"test@test.com\",\n\t\"Password\": \"Test123!!!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Identity/Login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Identity",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Identity User CurrentPassword",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjEyNWI1Zi0yN2E1LTRmZDQtODJiZC0xZjBhNWJjNmFkMDUiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jb20iLCJuYmYiOjE2MDE4MzY3ODYsImV4cCI6MTYwMjQ0MTU4NiwiaWF0IjoxNjAxODM2Nzg2fQ.nlhg_EvjxcHmzDa074wGDmz_cpCbITkPDN9Sc_cEUwI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Host",
+						"value": " localhost:5001",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": " Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": " en-US,bg;q=0.5",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": " gzip, deflate, br",
+						"type": "text"
+					},
+					{
+						"key": "DNT",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": " keep-alive",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": " cookieconsent_status=dismiss",
+						"type": "text"
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": " 1",
+						"type": "text"
+					},
+					{
+						"key": "Pragma",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Cache-Control",
+						"value": " no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"CurrentPassword\": \"Test123!!!\",\n\t\"NewPassword\": \"Test123!!?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Identity/ChangePassword",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Identity",
+						"ChangePassword"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

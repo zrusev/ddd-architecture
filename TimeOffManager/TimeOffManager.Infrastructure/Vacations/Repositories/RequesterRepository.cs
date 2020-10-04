@@ -7,7 +7,6 @@
     using Domain.Vacations.Exceptions;
     using Domain.Vacations.Models.Requesters;
     using Domain.Vacations.Repositories;
-    using Identity;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
@@ -24,27 +23,6 @@
         public RequesterRepository(IVacationsDbContext db, IMapper mapper)
             : base(db)
             => this.mapper = mapper;
-
-        private async Task<T> FindByUser<T>(
-            string userId,
-            Expression<Func<User, T>> selector,
-            CancellationToken cancellationToken = default
-            )
-        {
-            var requesterData = await this
-                .Data
-                .Users
-                .Where(u => u.Id == userId)
-                .Select(selector)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (requesterData == null)
-            {
-                throw new InvalidRequesterException("This user is not a requester.");
-            }
-
-            return requesterData;
-        }
 
         public async Task<RequesterOutputModel> GetDetails(int id, CancellationToken cancellationToken = default)
             => await this.mapper
@@ -69,5 +47,32 @@
             => await this.Data
                 .Teams
                 .FirstOrDefaultAsync(i => i.Id == teamId, cancellationToken);
+
+        public Task<int> GetRequesterId(string userId, CancellationToken cancellationToken = default)
+            => this.FindByUser(userId, requester => requester.Id, cancellationToken);
+
+        public Task<Requester> FindByUser(
+            string userId,
+            CancellationToken cancellationToken = default)
+            => this.FindByUser(userId, requester => requester, cancellationToken);
+
+        private async Task<T> FindByUser<T>(
+            string userId,
+            Expression<Func<Requester, T>> selector,
+            CancellationToken cancellationToken = default)
+        {
+            var requesterData = await this
+                .All()
+                .Where(u => u.UserId == userId)
+                .Select(selector)
+                .SingleOrDefaultAsync(cancellationToken);
+
+            if (requesterData == null)
+            {
+                throw new InvalidRequesterException("This user is not a requester.");
+            }
+
+            return requesterData;
+        }
     }
 }
