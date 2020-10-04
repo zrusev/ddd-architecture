@@ -9,7 +9,7 @@
     using Vacations.Requesters;
     using Vacations.Requesters.Commands.Create;
 
-    public class CreateRequesterCommand : UserInputModel, IRequest<CreateRequesterOutputModel>
+    public class CreateRequesterCommand : IRequest<CreateRequesterOutputModel>
     {
         public string FirstName { get; set; } = default!;
 
@@ -56,7 +56,7 @@
                     .WithFirstName(request.FirstName)
                     .WithLastName(request.LastName)
                     .WithEmployeeId(request.EmployeeId)
-                    .WithEmail(request.Email)
+                    .WithEmail(this.currentUser.UserEmail)
                     .WithImageUrl(request.ImageUrl)
                     .WithManager(manager)
                     .WithTeam(team)

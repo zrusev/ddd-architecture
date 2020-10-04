@@ -2,11 +2,9 @@
 {
     public class CreateUserSuccessModel
     {
-        public CreateUserSuccessModel(string requesterId)
-        {
-            this.RequesterId = requesterId;
-        }
+        public CreateUserSuccessModel(string token)
+            => this.Token = token;
 
-        public string RequesterId { get; set; }
+        public string Token { get; set; }
     }
 }

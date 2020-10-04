@@ -26,13 +26,13 @@
         public async Task<Result<CreateUserSuccessModel>> Register(UserInputModel userInput)
         {
             var user = new User(userInput.Email);
-
+            
             var identityResult = await this.userManager.CreateAsync(user, userInput.Password);
 
             var errors = identityResult.Errors.Select(e => e.Description);
 
             return identityResult.Succeeded
-                ? Result<CreateUserSuccessModel>.SuccessWith(new CreateUserSuccessModel(user.Id))
+                ? Result<CreateUserSuccessModel>.SuccessWith(new CreateUserSuccessModel(this.jwtTokenGenerator.GenerateToken(user)))
                 : Result<CreateUserSuccessModel>.Failure(errors);
         }
 

@@ -1,6 +1,7 @@
 ﻿namespace TimeOffManager.Infrastructure.Vacations.Configuration
 {
     using Domain.Vacations.Models.Requesters;
+    using Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,6 +16,12 @@
                 .HasOne(d => d.Employee)
                 .WithMany()
                 .HasForeignKey("EmployeeId")
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne<User>()
+                .WithOne()
+                .HasForeignKey<Requester>(d => d.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder

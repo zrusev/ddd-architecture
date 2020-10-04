@@ -25,16 +25,6 @@
             this.RuleFor(n => n.ImageUrl)
                 .MaximumLength(MaxUrlLength)
                 .NotEmpty();
-
-            this.RuleFor(u => u.Email)
-                .MinimumLength(MinEmailLength)
-                .MaximumLength(MaxEmailLength)
-                .EmailAddress()
-                .NotEmpty();
-
-            this.RuleFor(u => u.Password)
-                .MaximumLength(MaxNameLength)
-                .NotEmpty();
         }
     }
 }

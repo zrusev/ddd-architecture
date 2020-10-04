@@ -25,9 +25,6 @@
             : base(db)
             => this.mapper = mapper;
 
-        public Task<Requester> FindByUser(string userId, CancellationToken cancellationToken = default)
-            => this.FindByUser(userId, user => user.Requester!, cancellationToken);
-
         private async Task<T> FindByUser<T>(
             string userId,
             Expression<Func<User, T>> selector,

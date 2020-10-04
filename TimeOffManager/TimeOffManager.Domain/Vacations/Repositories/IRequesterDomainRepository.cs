@@ -2,11 +2,8 @@
 {
     using Common;
     using Models.Requesters;
-    using System.Threading;
-    using System.Threading.Tasks;
-
+    
     public interface IRequesterDomainRepository : IDomainRepository<Requester>
     {
-        Task<Requester> FindByUser(string userId, CancellationToken cancellationToken = default);
     }
 }
