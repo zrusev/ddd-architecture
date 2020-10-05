@@ -1,4 +1,4 @@
-﻿namespace TimeOffManager.Application.Identity.Commands.CreateUser
+﻿namespace TimeOffManager.Application.Vacations.Requesters.Commands.Create
 {
     using Common.Contracts;
     using Domain.Vacations.Factories.Requesters;
@@ -7,7 +7,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Vacations.Requesters;
-    using Vacations.Requesters.Commands.Create;
 
     public class CreateRequesterCommand : IRequest<CreateRequesterOutputModel>
     {

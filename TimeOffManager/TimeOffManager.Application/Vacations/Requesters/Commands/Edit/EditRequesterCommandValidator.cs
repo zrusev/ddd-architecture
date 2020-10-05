@@ -1,27 +1,27 @@
-﻿namespace TimeOffManager.Application.Vacations.Requesters.Commands.Create
+﻿namespace TimeOffManager.Application.Vacations.Requesters.Commands.Edit
 {
     using FluentValidation;
     using static Domain.Vacations.Models.ModelConstants.Common;
 
-    public class CreateRequesterCommandValidator : AbstractValidator<CreateRequesterCommand>
+    public class EditRequesterCommandValidator : AbstractValidator<EditRequesterCommand>
     {
-        public CreateRequesterCommandValidator()
+        public EditRequesterCommandValidator()
         {
-            this.RuleFor(n => n.FirstName)
+            this.RuleFor(u => u.FirstName)
                 .MinimumLength(MinNameLength)
                 .MaximumLength(MaxNameLength)
                 .NotEmpty();
 
-            this.RuleFor(n => n.LastName)
+            this.RuleFor(u => u.LastName)
                 .MinimumLength(MinNameLength)
                 .MaximumLength(MaxNameLength)
                 .NotEmpty();
 
-            this.RuleFor(n => n.EmployeeId)
-                .Length(EIDLength)
+            this.RuleFor(u => u.EmployeeId)
+                .MaximumLength(EIDLength)
                 .NotEmpty();
 
-            this.RuleFor(n => n.ImageUrl)
+            this.RuleFor(u => u.ImageUrl)
                 .MaximumLength(MaxUrlLength)
                 .NotEmpty();
         }
