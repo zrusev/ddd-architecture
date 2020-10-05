@@ -18,14 +18,14 @@
 
         public static void AgainstEmptyDateTime<TException>(DateTime value, string name = "Value")
             where TException : BaseDomainException, new()
-                {
-                    if (value == default(DateTime))
-                    {
-                        return;
-                    }
+        {
+            if (value != default(DateTime))
+            {
+                return;
+            }
 
-                    ThrowException<TException>($"{name} cannot be null ot empty.");
-                }
+            ThrowException<TException>($"{name} cannot be null ot empty.");
+        }
 
         public static void ForStringLength<TException>(string value, int minLength, int maxLength, string name = "Value")
             where TException : BaseDomainException, new()

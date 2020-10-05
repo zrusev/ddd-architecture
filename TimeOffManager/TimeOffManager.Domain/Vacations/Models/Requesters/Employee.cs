@@ -88,7 +88,7 @@
         public Employee UpdateLastName(string lastName)
         {
             this.ValidateName(lastName, nameof(this.LastName));
-            this.FirstName = lastName;
+            this.LastName = lastName;
 
             return this;
         }
@@ -129,21 +129,25 @@
         {
             if (!(leaveDate == default(DateTime)))
             {
-                this.HireDate = leaveDate;
+                this.LeaveDate = leaveDate;
             };
 
             return this;
         }
 
-        public Employee UpdatePTOBalance(PTOBalance? balance)
+        public Employee UpdatePTOBalance(
+            int? initial,
+            int? current,
+            int? updated
+            )
         {
-            if (balance is null)
+            if (initial is null || current is null)
             {
                 this.PTOBalance = new PTOBalance(0, 0, 0);
             }
             else
             {
-                this.PTOBalance = new PTOBalance(balance.Initial, balance.Current, balance.Updated);
+                this.PTOBalance = new PTOBalance(initial, current, updated);
             }
 
             return this;
@@ -183,7 +187,7 @@
         private void ValidateEmail(string email)
             => Guard.ForStringLength<InvalidRequesterException>(
                 email,
-                MaxEmailLength,
+                MinEmailLength,
                 MaxEmailLength,
                 nameof(this.Email));
 

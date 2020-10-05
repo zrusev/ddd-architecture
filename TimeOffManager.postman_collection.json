@@ -320,7 +320,14 @@
 									"name": "Edit",
 									"request": {
 										"auth": {
-											"type": "noauth"
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjEyNWI1Zi0yN2E1LTRmZDQtODJiZC0xZjBhNWJjNmFkMDUiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jb20iLCJuYmYiOjE2MDE4MzY3MDEsImV4cCI6MTYwMjQ0MTUwMSwiaWF0IjoxNjAxODM2NzAxfQ.9l66_Pi4wCdCwTaicPlM8n6cB3EW4kbrHSQg7i1CaBI",
+													"type": "string"
+												}
+											]
 										},
 										"method": "PUT",
 										"header": [
@@ -388,7 +395,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"firstName\": \"UpdatedUser\",\n\t\"lastName\": \"UpdatedName\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/dog/\",\n    \"hireDate\": \"\",\n    \"pTOBalance\": {\n        \"initial\": 20,\n        \"current\": 20\n    },\n    \"managerId\": 2,\n    \"teamId\": 1\n}",
+											"raw": "{\n\t\"firstName\": \"UpdatedFirstName\",\n\t\"lastName\": \"UpdatedLastName\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/dog/\",\n    \"hireDate\": \"2020-02-13 00:00:00\",\n    \"initial\" : 20,\n    \"current\": 20,\n    \"managerId\": 1,\n    \"teamId\": 1\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -396,7 +403,7 @@
 											}
 										},
 										"url": {
-											"raw": "https://localhost:5001/Requesters/1",
+											"raw": "https://localhost:5001/Requesters/4",
 											"protocol": "https",
 											"host": [
 												"localhost"
@@ -404,7 +411,7 @@
 											"port": "5001",
 											"path": [
 												"Requesters",
-												"1"
+												"4"
 											]
 										}
 									},

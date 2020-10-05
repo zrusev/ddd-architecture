@@ -64,6 +64,7 @@
             var requesterData = await this
                 .All()
                 .Where(u => u.UserId == userId)
+                .Include(i => i.Employee)
                 .Select(selector)
                 .SingleOrDefaultAsync(cancellationToken);
 

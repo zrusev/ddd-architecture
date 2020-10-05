@@ -3,7 +3,6 @@
     using Application.Common;
     using Application.Common.Contracts;
     using Domain.Vacations.Exceptions;
-    using Domain.Vacations.Models.Shared;
     using Domain.Vacations.Repositories;
     using MediatR;
     using System;
@@ -20,15 +19,19 @@
 
         public string ImageUrl { get; set; } = default!;
 
-        public DateTime HireDate { get; set; } = default!;
+        public DateTime HireDate { get; set; } = default;
 
-        public DateTime? LeaveDate { get; set; } = default!;
-        
-        public PTOBalance? PTOBalance { get; set; } = default!;
+        public DateTime? LeaveDate { get; set; } = default;
 
-        public int ManagerId { get; set; } = default!;
+        public int? Initial { get; set; } = default;
 
-        public int TeamId { get; set; } = default!;
+        public int? Current { get; set; } = default;
+
+        public int? Updated { get; set; } = default;
+
+        public int ManagerId { get; set; } = default;
+
+        public int TeamId { get; set; } = default;
 
         public class EditRequesterCommandHandler : IRequestHandler<EditRequesterCommand, Result>
         {
@@ -72,7 +75,7 @@
                     .UpdateEmail(this.currentUser.UserEmail)
                     .UpdateHireDate(request.HireDate)
                     .UpdateLeaveDate(request.LeaveDate)
-                    .UpdatePTOBalance(request.PTOBalance)
+                    .UpdatePTOBalance(request.Initial, request.Current, request.Updated)
                     .UpdateManager(manager)
                     .UpdateTeam(team);
 

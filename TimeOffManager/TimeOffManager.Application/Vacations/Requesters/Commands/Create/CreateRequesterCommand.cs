@@ -18,9 +18,9 @@
 
         public string ImageUrl { get; set; } = default!;
 
-        public int ManagerId { get; set; } = default!;
+        public int ManagerId { get; set; } = default;
 
-        public int TeamId { get; set; } = default!;
+        public int TeamId { get; set; } = default;
 
         public class CreateRequesterCommandHandler : IRequestHandler<CreateRequesterCommand, CreateRequesterOutputModel>
         {

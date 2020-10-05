@@ -25,9 +25,10 @@
             => await this.Send(command);
 
         [HttpPut]
+        [Authorize]
         [Route(Id)]
         public async Task<ActionResult> Edit(
-            int id, 
+            int id,
             EditRequesterCommand command)
             => await this.Send(command.SetId(id));
     }
