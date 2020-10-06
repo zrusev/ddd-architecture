@@ -22,11 +22,14 @@
             this.Hours = hours;
         }
 
-        private RequestDate()
+        private RequestDate(
+            DateTime date,
+            TimeSpan hours
+            )
         {
             this.RequestType = default!;
-            this.Date = default!;
-            this.Hours = default!;
+            this.Date = date;
+            this.Hours = hours;
         }
 
         public RequestType RequestType { get; private set; }

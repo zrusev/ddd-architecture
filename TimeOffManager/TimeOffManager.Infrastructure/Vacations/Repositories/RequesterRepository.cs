@@ -9,6 +9,7 @@
     using Domain.Vacations.Repositories;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
@@ -65,6 +66,7 @@
                 .All()
                 .Where(u => u.UserId == userId)
                 .Include(i => i.Employee)
+                .Include(e => e.Employee.Manager)
                 .Select(selector)
                 .SingleOrDefaultAsync(cancellationToken);
 

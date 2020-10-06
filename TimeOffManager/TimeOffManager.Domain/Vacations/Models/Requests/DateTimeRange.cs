@@ -1,6 +1,7 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Models.Requests
 {
     using System;
+    using System.Collections.Generic;
     using Common.Models;
 
     public class DateTimeRange : ValueObject
@@ -25,6 +26,9 @@
         public int DurationInMinutes()
             => (this.End - this.Start).Minutes;
 
+        public int DurationInDays()
+            => (this.End - this.Start).Days;
+
         public DateTimeRange NewEnd(DateTime newEnd)
             => new DateTimeRange(this.Start, newEnd);
 
@@ -43,5 +47,17 @@
         public bool Overlaps(DateTimeRange dateTimeRange)
             => this.Start < dateTimeRange.End &&
             this.End > dateTimeRange.Start;
+
+        public List<DateTime> ToList()
+        {
+            var dates = new List<DateTime>();
+            
+            for (var dt = this.Start; dt <= this.End; dt = dt.AddDays(1))
+            {
+                dates.Add(dt);
+            }
+
+            return dates;
+        }
     }
 }

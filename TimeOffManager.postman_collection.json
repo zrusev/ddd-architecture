@@ -558,7 +558,47 @@
 					"item": [
 						{
 							"name": "Commands",
-							"item": [],
+							"item": [
+								{
+									"name": "Create",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjEyNWI1Zi0yN2E1LTRmZDQtODJiZC0xZjBhNWJjNmFkMDUiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jb20iLCJuYmYiOjE2MDE4MzY3MDEsImV4cCI6MTYwMjQ0MTUwMSwiaWF0IjoxNjAxODM2NzAxfQ.9l66_Pi4wCdCwTaicPlM8n6cB3EW4kbrHSQg7i1CaBI",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Start\": \"2020-10-01\",\r\n    \"End\": \"2020-10-05\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://localhost:5001/Requests/Create",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"Requests",
+												"Create"
+											]
+										}
+									},
+									"response": []
+								}
+							],
 							"protocolProfileBehavior": {},
 							"_postman_isSubFolder": true
 						},

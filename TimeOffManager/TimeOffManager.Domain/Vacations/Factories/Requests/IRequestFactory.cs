@@ -4,22 +4,29 @@
     using Models.Requests;
     using System;
     using System.Collections.Generic;
+    using TimeOffManager.Domain.Vacations.Models.Shared;
 
     public interface IRequestFactory : IFactory<Request>
     {
         IRequestFactory WithPeriod(DateTime start, DateTime end);
 
-        IRequestFactory WithPTOBalance(int? initial, int? current, int? updated);
+        IRequestFactory WithPTOBalance(PTOBalance balance);
 
         IRequestFactory WithApprover(int? approverId);
 
-        IRequestFactory WithDays(int days);
+        IRequestFactory WithDays(DateTime start, DateTime end);
 
-        IRequestFactory WithRequestDates(HashSet<RequestDate> requestDates);
+        IRequestFactory WithRequestDates(
+            RequestType type, 
+            TimeSpan hours, 
+            bool excludeHolidays, 
+            bool ExcludeWeekends, 
+            List<DateTime> holidays, 
+            List<DateTime> alreadyRequestedDays);
 
-        IRequestFactory WithRequesterComment(string comment);
+        IRequestFactory WithRequesterComment(string? comment);
 
-        IRequestFactory WithApproverComment(string comment);
+        IRequestFactory WithApproverComment(string? comment);
 
         IRequestFactory WithOptions(
             bool isApproved,

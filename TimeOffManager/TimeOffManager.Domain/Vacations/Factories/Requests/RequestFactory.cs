@@ -16,23 +16,33 @@
         private Options options = default!;
         private PTOBalance? pTOBalance = default!;
 
+        public RequestFactory()
+        {
+            this.requestDates = new HashSet<RequestDate>(new RequestDateComparer());
+        }
+
         public IRequestFactory WithApprover(int? approverId)
         {
-            this.approverId = approverId;
+            if (!(approverId is null))
+            {
+                this.approverId = approverId;
+            }
 
             return this;
         }
 
-        public IRequestFactory WithPTOBalance(int? initial, int? current, int? updated)
+        public IRequestFactory WithPTOBalance(PTOBalance balance)
         {
-            this.pTOBalance = new PTOBalance(initial, current, updated);
+            this.pTOBalance = new PTOBalance(balance.Initial, balance.Current, balance.Updated);
 
             return this;
         }
 
-        public IRequestFactory WithDays(int days)
+        public IRequestFactory WithDays(DateTime start, DateTime end)
         {
-            this.days = days;
+            this.days = new DateTimeRange(start, end).DurationInDays();
+
+            this.days++; //Include current
 
             return this;
         }
@@ -60,21 +70,52 @@
             return this;
         }
 
-        public IRequestFactory WithRequestDates(HashSet<RequestDate> requestDates)
+        public IRequestFactory WithRequestDates(
+            RequestType type,
+            TimeSpan hours, 
+            bool excludeHolidays, 
+            bool excludeWeekends,
+            List<DateTime> holidays,
+            List<DateTime> alreadyRequestedDays
+            )
         {
-            this.requestDates = requestDates;
+            var dates = this.dateTimeRange.ToList();
+
+            for (int i = 0; i < dates.Count; i++)
+            {
+                var current = i;
+
+                if (excludeWeekends && (dates[current].DayOfWeek == DayOfWeek.Saturday || dates[current].DayOfWeek == DayOfWeek.Sunday))
+                {
+                    this.days--;
+                    continue;
+                }
+
+                if (excludeHolidays && holidays.Contains(dates[current]))
+                {
+                    this.days--;
+                    continue;
+                }
+
+                if (alreadyRequestedDays.Contains(dates[current]))
+                {
+                    continue;
+                }
+
+                this.requestDates.Add(new RequestDate(type, dates[current], hours));
+            }
 
             return this;
         }
 
-        public IRequestFactory WithRequesterComment(string comment)
+        public IRequestFactory WithRequesterComment(string? comment)
         {
             this.requesterComment = comment;
 
             return this;
         }
 
-        public IRequestFactory WithApproverComment(string comment)
+        public IRequestFactory WithApproverComment(string? comment)
         {
             this.approverComment = comment;
 

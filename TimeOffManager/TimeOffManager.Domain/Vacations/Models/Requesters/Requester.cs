@@ -4,6 +4,7 @@
     using Common.Models;
     using System.Collections.Generic;
     using System.Linq;
+    using Vacations.Events.Requests;
     using Vacations.Models.Requests;
 
     public class Requester : Entity<int>, IAggregateRoot
@@ -35,8 +36,14 @@
 
         public IReadOnlyCollection<Request> Requests => this.requests.ToList().AsReadOnly();
 
+        public void AddRequest(Request request)
+        {
+            this.requests.Add(request);
+
+            this.RaiseEvent(new RequestAddedEvent());
+        }
+
         public void HasEmployee(Employee employee)
             => this.Employee = employee;
-
     }
 }

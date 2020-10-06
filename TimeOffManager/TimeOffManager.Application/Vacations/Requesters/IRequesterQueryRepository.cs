@@ -4,6 +4,7 @@
     using Domain.Vacations.Models.Requesters;
     using System.Threading;
     using System.Threading.Tasks;
+    using TimeOffManager.Domain.Vacations.Models.Shared;
     using Vacations.Requesters.Queries.Common;
 
     public interface IRequesterQueryRepository : IQueryRepository<Requester>
