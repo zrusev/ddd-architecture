@@ -42,7 +42,7 @@
             this.ApproverComment = approverComment;
 
             this.DateTimeRange = default!;
-            this.RequestDates = new HashSet<RequestDate>(new RequestDateComparer());
+            this.RequestDates = new HashSet<RequestDate>();
             this.Options = default!;
             this.PTOBalance = default!;
         }

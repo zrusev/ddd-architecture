@@ -1,10 +1,9 @@
 ﻿namespace TimeOffManager.Infrastructure.Vacations.Configuration
 {
-    using static Domain.Vacations.Models.ModelConstants.Request;
-
     using Domain.Vacations.Models.Requests;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using static Domain.Vacations.Models.ModelConstants.Request;
 
     public class RequestConfiguration : IEntityTypeConfiguration<Request>
     {
@@ -12,7 +11,7 @@
         {
             builder
                 .HasKey(d => d.Id);
-            
+
             builder
                 .Property(p => p.RequestedOn)
                 .IsRequired();

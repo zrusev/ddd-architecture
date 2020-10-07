@@ -9,7 +9,6 @@
     using Domain.Vacations.Repositories;
     using Microsoft.EntityFrameworkCore;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
@@ -29,6 +28,18 @@
             => await this.mapper
                 .ProjectTo<RequesterOutputModel>(this
                     .All()
+                    .Where(d => d.Id == id))
+                .FirstOrDefaultAsync(cancellationToken);
+
+        public async Task<RequesterOutputModel> GetDetailsWithRequests(
+            int id,
+            CancellationToken cancellationToken = default)
+            => await this.mapper
+                .ProjectTo<RequesterOutputModel>(this
+                    .All()
+                    .Include(u => u.Requests)
+                    .ThenInclude(k => k.RequestDates)
+                    .ThenInclude(p => p.RequestType)
                     .Where(d => d.Id == id))
                 .FirstOrDefaultAsync(cancellationToken);
 

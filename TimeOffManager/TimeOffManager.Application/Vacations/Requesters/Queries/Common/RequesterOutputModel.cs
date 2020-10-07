@@ -3,6 +3,9 @@
     using Application.Common.Mapping;
     using AutoMapper;
     using Domain.Vacations.Models.Requesters;
+    using Domain.Vacations.Models.Requests;
+    using System;
+    using System.Collections.Generic;
 
     public class RequesterOutputModel : IMapFrom<Requester>
     {
@@ -22,6 +25,8 @@
 
         public Team? Team { get; private set; } = default!;
 
+        public List<Request> Requests { get; private set; } = default!;
+
         public virtual void Mapping(Profile mapper)
             => mapper
                 .CreateMap<Requester, RequesterOutputModel>()
@@ -38,6 +43,8 @@
                 .ForMember(d => d.Manager, cfg => cfg
                     .MapFrom(d => d.Employee.Manager))
                 .ForMember(d => d.Team, cfg => cfg
-                    .MapFrom(d => d.Employee.Team));
+                    .MapFrom(d => d.Employee.Team))
+                .ForMember(d => d.Requests, cfg => cfg
+                    .MapFrom(d => d.Requests));
     }
 }

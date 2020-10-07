@@ -18,7 +18,7 @@
 
         public RequestFactory()
         {
-            this.requestDates = new HashSet<RequestDate>(new RequestDateComparer());
+            this.requestDates = new HashSet<RequestDate>();
         }
 
         public IRequestFactory WithApprover(int? approverId)

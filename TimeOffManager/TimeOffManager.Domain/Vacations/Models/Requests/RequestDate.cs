@@ -27,9 +27,10 @@
             TimeSpan hours
             )
         {
-            this.RequestType = default!;
             this.Date = date;
             this.Hours = hours;
+            
+            this.RequestType = default!;
         }
 
         public RequestType RequestType { get; private set; }
