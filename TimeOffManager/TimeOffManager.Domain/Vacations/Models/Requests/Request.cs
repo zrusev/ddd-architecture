@@ -4,10 +4,14 @@
     using Common.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Vacations.Models.Shared;
 
     public class Request: Entity<int>, IAggregateRoot
     {
+        private static readonly IEnumerable<RequestType> AllowedTypes
+            = new RequestTypeData().GetData().Cast<RequestType>();
+
         internal Request(
             DateTimeRange dateTimeRange,
             int days,
@@ -49,6 +53,8 @@
 
         public DateTime RequestedOn { get; } = DateTime.Now;
 
+        public DateTime? ApprovedOn { get; private set; }
+
         public DateTimeRange DateTimeRange { get; private set; }
         
         public int Days { get; private set; }
@@ -77,6 +83,56 @@
                 isPlanning,
                 excludeHolidays,
                 excludeWeekends);
+
+            return this;
+        }
+
+        public Request UpdateApprover(int approverId)
+        {
+            this.ApproverId = approverId;
+
+            return this;
+        }
+
+        public Request UpdateApproverComment(string? comment)
+        {
+            this.ApproverComment = comment;
+
+            return this;
+        }
+
+        public Request UpdateIsApproved(bool isApproved)
+        {
+            this.Options = new Options(
+                isApproved, 
+                this.Options.IsPlanning, 
+                this.Options.ExcludeHolidays, 
+                this.Options.ExcludeWeekends);
+
+            return this;
+        }
+
+        public Request UpdateApprovedOn(DateTime approvedOn)
+        {
+            this.ApprovedOn = approvedOn;
+
+            return this;
+        }
+
+        public Request UpdateUpdatedPTOBalance(string requestTypeName)
+        {
+            var updated = this.PTOBalance.Current ?? 0;
+
+            if (AllowedTypes.Any(s => s.Name == requestTypeName) &&
+                AllowedTypes.First().Name == requestTypeName)
+            {
+                updated -= this.Days;
+            }
+
+            this.PTOBalance = new PTOBalance(
+                    this.PTOBalance.Initial,
+                    this.PTOBalance.Current,
+                    updated);
 
             return this;
         }

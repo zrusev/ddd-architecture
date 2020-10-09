@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dd0c3bba-134c-4418-af6c-24af3bca38ee",
+		"_postman_id": "470389ed-de3d-48d5-93d6-704527631c4f",
 		"name": "TimeOffManager",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -184,7 +184,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Email\": \"test@test.com\",\n\t\"Password\": \"Test123!!!\"\n}",
+									"raw": "{\n\t\"Email\": \"test@test5.com\",\n\t\"Password\": \"Test123!!!\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -278,7 +278,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Email\": \"test@test.com\",\n\t\"Password\": \"Test123!!!\"\n}",
+									"raw": "{\n\t\"Email\": \"test@test6.com\",\n\t\"Password\": \"Test123!!!\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -425,7 +425,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjEyNWI1Zi0yN2E1LTRmZDQtODJiZC0xZjBhNWJjNmFkMDUiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jb20iLCJuYmYiOjE2MDE4MzY3MDEsImV4cCI6MTYwMjQ0MTUwMSwiaWF0IjoxNjAxODM2NzAxfQ.9l66_Pi4wCdCwTaicPlM8n6cB3EW4kbrHSQg7i1CaBI",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWU4MjNlMy05M2U5LTQxYzMtYmU2OS0yZGJhNDEwOTA2MDEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDYuY29tIiwibmJmIjoxNjAyMjU5ODY3LCJleHAiOjE2MDI4NjQ2NjcsImlhdCI6MTYwMjI1OTg2N30.ZmeR19agiG2F48JcAuR2TPdNTQ0mprxwkbRbvORPj6A",
 													"type": "string"
 												}
 											]
@@ -496,7 +496,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"firstName\": \"User\",\n\t\"lastName\": \"Name\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/cat/\",\n    \"ManagerId\": 1\n}",
+											"raw": "{\n\t\"firstName\": \"User\",\n\t\"lastName\": \"Name\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/cat/\",\n    \"pTOInitial\": 20,\n    \"pTOCurrent\": 20,\n    \"ManagerId\": 1\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -567,7 +567,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjEyNWI1Zi0yN2E1LTRmZDQtODJiZC0xZjBhNWJjNmFkMDUiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdC5jb20iLCJuYmYiOjE2MDE4MzY3MDEsImV4cCI6MTYwMjQ0MTUwMSwiaWF0IjoxNjAxODM2NzAxfQ.9l66_Pi4wCdCwTaicPlM8n6cB3EW4kbrHSQg7i1CaBI",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWU4MjNlMy05M2U5LTQxYzMtYmU2OS0yZGJhNDEwOTA2MDEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDYuY29tIiwibmJmIjoxNjAyMjU5ODY3LCJleHAiOjE2MDI4NjQ2NjcsImlhdCI6MTYwMjI1OTg2N30.ZmeR19agiG2F48JcAuR2TPdNTQ0mprxwkbRbvORPj6A",
 													"type": "string"
 												}
 											]
@@ -576,7 +576,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Start\": \"2020-10-01\",\r\n    \"End\": \"2020-10-05\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
+											"raw": "{\r\n    \"Start\": \"2020-10-20\",\r\n    \"End\": \"2020-10-20\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -597,6 +597,45 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "Approve",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWU4MjNlMy05M2U5LTQxYzMtYmU2OS0yZGJhNDEwOTA2MDEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDYuY29tIiwibmJmIjoxNjAyMjU5ODY3LCJleHAiOjE2MDI4NjQ2NjcsImlhdCI6MTYwMjI1OTg2N30.ZmeR19agiG2F48JcAuR2TPdNTQ0mprxwkbRbvORPj6A",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"isApproved\": true,\r\n    \"approverComment\": \"Your request has been approved\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://localhost:5001/Requests/10",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"Requests",
+												"10"
+											]
+										}
+									},
+									"response": []
 								}
 							],
 							"protocolProfileBehavior": {},
@@ -604,7 +643,28 @@
 						},
 						{
 							"name": "Queries",
-							"item": [],
+							"item": [
+								{
+									"name": "Details",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:5001/Requests/12",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "5001",
+											"path": [
+												"Requests",
+												"12"
+											]
+										}
+									},
+									"response": []
+								}
+							],
 							"protocolProfileBehavior": {},
 							"_postman_isSubFolder": true
 						}

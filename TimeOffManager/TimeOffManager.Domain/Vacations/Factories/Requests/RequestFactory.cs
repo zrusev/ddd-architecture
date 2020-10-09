@@ -97,10 +97,14 @@
                     continue;
                 }
 
+                //------------this logic could be revised-----------------------
+                
                 if (alreadyRequestedDays.Contains(dates[current]))
                 {
                     continue;
                 }
+                
+                //--------------------------------------------------------------
 
                 var date = new RequestDate(type, dates[current], hours);
                 

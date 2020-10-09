@@ -51,6 +51,15 @@
                     .Where(d => d.Requests.Any(c => c.Id == requestId)))
                 .SingleOrDefaultAsync(cancellationToken);
 
+        public async Task<Requester> GetRequesterByRequestId(int requestId, CancellationToken cancellationToken = default)
+            => await this
+                    .All()
+                    .Include(e => e.Employee)
+                        .ThenInclude(p => p.PTOBalance)
+                    .Where(d => d.Requests.Any(c => c.Id == requestId))
+                    .SingleOrDefaultAsync(cancellationToken);
+
+
         public async Task<Employee> FindByManagerId(int managerId, CancellationToken cancellationToken = default)
             => await this.Data
                 .Employees
@@ -78,7 +87,8 @@
                 .All()
                 .Where(u => u.UserId == userId)
                 .Include(i => i.Employee)
-                .Include(e => e.Employee.Manager)
+                .Include(m => m.Employee.Manager)
+                .Include(p => p.Employee.PTOBalance)
                 .Select(selector)
                 .SingleOrDefaultAsync(cancellationToken);
 

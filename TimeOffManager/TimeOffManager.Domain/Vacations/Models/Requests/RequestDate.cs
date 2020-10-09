@@ -4,13 +4,9 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
 
     public class RequestDate : Entity<int>
     {
-        private static readonly IEnumerable<RequestType> AllowedTypes
-            = new RequestTypeData().GetData().Cast<RequestType>();
-
         internal RequestDate(
             RequestType requestType,
             DateTime date,
