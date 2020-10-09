@@ -21,6 +21,6 @@
      
         Task<RequesterOutputModel> GetDetailsByRequestId(int requestId, CancellationToken cancellationToken = default);
 
-        Task<RequesterOutputModel> GetDetailsWithRequests(int id, CancellationToken cancellationToken = default);
+        Task<RequesterOutputModel> GetDetailsWithRequests(int requesterId, CancellationToken cancellationToken = default);
     }
 }

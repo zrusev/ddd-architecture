@@ -32,15 +32,16 @@
                 .FirstOrDefaultAsync(cancellationToken);
 
         public async Task<RequesterOutputModel> GetDetailsWithRequests(
-            int id,
+            int requesterId,
             CancellationToken cancellationToken = default)
             => await this.mapper
                 .ProjectTo<RequesterOutputModel>(this
                     .All()
+                    .Where(d => d.Id == requesterId)
                     .Include(u => u.Requests)
-                    .ThenInclude(k => k.RequestDates)
-                    .ThenInclude(p => p.RequestType)
-                    .Where(d => d.Id == id))
+                        .ThenInclude(d => d.RequestDates)
+                            .ThenInclude(m => m.RequestType)
+                )
                 .FirstOrDefaultAsync(cancellationToken);
 
         public async Task<RequesterOutputModel> GetDetailsByRequestId(int requestId, CancellationToken cancellationToken = default)

@@ -14,9 +14,13 @@
 
         public string LastName { get; set; } = default!;
 
-        public string EmployeeId { get; set; } = default!;
+        public string EmployeeId { get; set; } = default!; //domain property not a reference ID
 
         public string ImageUrl { get; set; } = default!;
+
+        public int? PTOInitial { get; set; }
+
+        public int? PTOCurrent { get; set; }
 
         public int ManagerId { get; set; } = default;
 
@@ -47,9 +51,11 @@
                 CancellationToken cancellationToken
                 )
             {
-                var manager = await this.requesterQueryRepository.FindByManagerId(request.ManagerId);
+                var manager = await this.requesterQueryRepository
+                    .FindByManagerId(request.ManagerId);
 
-                var team = await this.requesterQueryRepository.FindByTeamId(request.TeamId);
+                var team = await this.requesterQueryRepository
+                    .FindByTeamId(request.TeamId);
 
                 var requester = this.requesterFactory
                     .WithFirstName(request.FirstName)
@@ -57,6 +63,10 @@
                     .WithEmployeeId(request.EmployeeId)
                     .WithEmail(this.currentUser.UserEmail)
                     .WithImageUrl(request.ImageUrl)
+                    .WithPTOBalance(
+                        request.PTOInitial, 
+                        request.PTOCurrent, 
+                        null)
                     .WithManager(manager)
                     .WithTeam(team)
                     .FromUser(this.currentUser.UserId)

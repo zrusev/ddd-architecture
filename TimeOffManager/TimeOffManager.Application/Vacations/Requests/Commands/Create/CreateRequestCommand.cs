@@ -4,15 +4,16 @@
     using Domain.Vacations.Factories.Requests;
     using MediatR;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using TimeOffManager.Application.Common;
+    using TimeOffManager.Domain.Vacations.Exceptions;
     using TimeOffManager.Domain.Vacations.Repositories;
     using Vacations.Requesters;
     using Vacations.Requests.Queries;
 
-    public class CreateRequestCommand : IRequest<CreateRequestOutputModel> 
+    public class CreateRequestCommand : IRequest<Result<CreateRequestOutputModel>> 
     {
         public DateTime Start { get; set; }
 
@@ -30,7 +31,7 @@
 
         public bool ExcludeWeekends { get; set; }
 
-        public class CreateRequestCommandHandler : IRequestHandler<CreateRequestCommand, CreateRequestOutputModel>
+        public class CreateRequestCommandHandler : IRequestHandler<CreateRequestCommand, Result<CreateRequestOutputModel>>
         {
             private readonly ICurrentUser currentUser;
             private readonly IRequestFactory requestFactory;
@@ -53,7 +54,7 @@
                 this.requestDomainRepository = requestDomainRepository;
             }
 
-            public async Task<CreateRequestOutputModel> Handle(
+            public async Task<Result<CreateRequestOutputModel>> Handle(
                 CreateRequestCommand request, 
                 CancellationToken cancellationToken
                 )
@@ -62,11 +63,13 @@
                     this.currentUser.UserId,
                     cancellationToken);
 
-                var approverId = requester!.Employee!.Manager!.Id;
+                var manager = requester.Employee.Manager 
+                    ?? throw new InvalidManagerException("Manager does not exists");
                 
-                var pTOBalance = requester.Employee.PTOBalance!;
-
-                var type = await this.requestQueryRepository.GetRequestType(
+                var pTOBalance = requester.Employee.PTOBalance 
+                    ?? throw new InvalidPTOBalanceException("PTO Balance does not exists");
+                
+                var requestType = await this.requestQueryRepository.GetRequestType(
                     request.RequestTypeName,
                     cancellationToken);
 
@@ -87,11 +90,11 @@
                 var vacationRequest = this.requestFactory
                     .WithPeriod(request.Start, request.End)
                     .WithDays(request.Start, request.End)
-                    .WithApprover(approverId)
+                    .WithApprover(manager.Id)
                     .WithRequesterComment(request.RequesterComment)
                     .WithPTOBalance(pTOBalance)
                     .WithRequestDates(
-                        type,
+                        requestType,
                         request.Hours,
                         request.ExcludeHolidays,
                         request.ExcludeWeekends,
