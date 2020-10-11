@@ -75,8 +75,7 @@
             TimeSpan hours, 
             bool excludeHolidays, 
             bool excludeWeekends,
-            List<DateTime> holidays,
-            List<DateTime> alreadyRequestedDays
+            List<DateTime> holidays
             )
         {
             var dates = this.dateTimeRange.ToList();
@@ -96,15 +95,6 @@
                     this.days--;
                     continue;
                 }
-
-                //------------this logic could be revised-----------------------
-                
-                if (alreadyRequestedDays.Contains(dates[current]))
-                {
-                    continue;
-                }
-                
-                //--------------------------------------------------------------
 
                 var date = new RequestDate(type, dates[current], hours);
                 

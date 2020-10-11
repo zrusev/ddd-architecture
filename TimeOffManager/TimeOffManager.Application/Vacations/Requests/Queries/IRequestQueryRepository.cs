@@ -16,12 +16,6 @@
 
         Task<List<DateTime>> GetNationalHolidays(CancellationToken cancellationToken = default);
 
-        Task<List<DateTime>> GetAlreadyRequestedDays(
-            int requesterId, 
-            DateTime start, 
-            DateTime end, 
-            CancellationToken cancellationToken = default);
-
         Task<RequestDetailsOutputModel> GetDetails(int requestId, CancellationToken cancellationToken = default);
     }
 }

@@ -4,7 +4,6 @@
     using Domain.Vacations.Factories.Requests;
     using MediatR;
     using System;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using TimeOffManager.Application.Common;
@@ -76,17 +75,6 @@
                 var holidays = await this.requestQueryRepository.GetNationalHolidays(
                     cancellationToken);
 
-                var userRequests = await this.requesterQueryRepository.GetDetailsWithRequests(
-                    requester.Id,
-                    cancellationToken);
-
-                var requestedDates = userRequests
-                    .Requests
-                    .SelectMany(d => d.RequestDates
-                        .Select(k => k.Date)
-                        .Where(d => d.Date >= request.Start && d.Date <= request.End))
-                    .ToList();
-
                 var vacationRequest = this.requestFactory
                     .WithPeriod(request.Start, request.End)
                     .WithDays(request.Start, request.End)
@@ -98,8 +86,7 @@
                         request.Hours,
                         request.ExcludeHolidays,
                         request.ExcludeWeekends,
-                        holidays,
-                        requestedDates)
+                        holidays)
                     .WithOptions(
                         false, 
                         request.IsPlanning, 

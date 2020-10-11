@@ -21,8 +21,7 @@
             TimeSpan hours, 
             bool excludeHolidays, 
             bool ExcludeWeekends, 
-            List<DateTime> holidays, 
-            List<DateTime> alreadyRequestedDays);
+            List<DateTime> holidays);
 
         IRequestFactory WithRequesterComment(string? comment);
 

@@ -1,7 +1,8 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Models.Shared
 {
     using Domain.Common.Models;
-    
+    using System.Collections.Generic;
+
     public class PTOBalance : ValueObject
     {
         internal PTOBalance(

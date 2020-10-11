@@ -2,6 +2,7 @@
 {
     using Common;
     using Common.Contracts;
+    using Domain.Vacations.Exceptions;
     using Domain.Vacations.Repositories;
     using MediatR;
     using System;
@@ -13,14 +14,16 @@
 
     public class ApproveRequestCommand : EntityCommand<int>, IRequest<Result>
     {
-        public bool IsApproved { get; set; } //can decline as well
+        public bool IsApproved { get; set; }
 
         public string? ApproverComment { get; set; }
 
-        public DateTime ApprovedOn { get; } = DateTime.Now;
+        public DateTime RevisedOn { get; } = DateTime.Now;
 
         public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand, Result>
         {
+            private const string PaidLeaveType = "Paid leave";
+
             private readonly ICurrentUser currentUser;
             private readonly IRequesterQueryRepository requesterQueryRepository;
             private readonly IRequestQueryRepository requestQueryRepository;
@@ -55,26 +58,65 @@
                     request.Id,
                     cancellationToken);
 
-                var requestTypeName = requestDetails
+                if (requestDetails.ApproverId != approver.Id)
+                    throw new InvalidApproverException("You are not allowed to approve this request.");
+
+                if (requestDetails.Options.IsApproved)
+                    throw new InvalidApproverException("This request has already been approved.");
+
+                var requester = await this.requesterQueryRepository.GetRequesterByRequestId(
+                    request.Id,
+                    cancellationToken);
+
+                var requesterModel = await this.requesterQueryRepository.GetDetailsWithRequests(
+                    requester.Id,
+                    cancellationToken);
+
+                var lastRequestedDates = requesterModel
+                    .Requests
+                    .Where(r => r.Options.IsApproved)
+                    .SelectMany(d => d.RequestDates)
+                    .GroupBy(g => g.Date)
+                    .SelectMany(d => d
+                        .Where(d => d.Date >= requestDetails.DateTimeRange.Start && 
+                            d.Date <= requestDetails.DateTimeRange.End)
+                        .OrderByDescending(r => r.Id)
+                        .Take(1)
+                        )                    
+                    .Select(d => new { typeName = d.RequestType.Name, date = d.Date})
+                    .ToList();
+
+                var currentBalance = requester
+                    .Employee.PTOBalance!.Current ?? 0;
+
+                var isCurrentPaidLeaveType = requestDetails
                     .RequestDates
-                    .FirstOrDefault(s => !(s.RequestType is null))
-                    .RequestType.Name;
+                    .Any(d => d.RequestType.Name == PaidLeaveType);
+                
+                var isPreviousPaidLeaveType = lastRequestedDates
+                    .Any(d => d.typeName == PaidLeaveType);
 
-                //You can add a check whether my manager is the approver or can be anyone
-
+                if (currentBalance > 0 && isCurrentPaidLeaveType && !isPreviousPaidLeaveType)
+                    currentBalance -= requestDetails.Days;
+                
+                if (currentBalance > 0 && !isCurrentPaidLeaveType && isPreviousPaidLeaveType)
+                    currentBalance += requestDetails.Days;
+                
                 requestDetails
                     .UpdateApprover(approver.Id)
                     .UpdateApproverComment(request.ApproverComment)
                     .UpdateIsApproved(request.IsApproved)
-                    .UpdateApprovedOn(request.ApprovedOn)
-                    .UpdateUpdatedPTOBalance(requestTypeName);
-
-                var requester = await this.requesterQueryRepository.GetRequesterByRequestId(
-                    requestDetails.Id,
-                    cancellationToken);
+                    .UpdateRevisedOn(request.RevisedOn)
+                    .UpdateUpdatedPTOBalance(
+                        requester.Employee.PTOBalance.Initial,
+                        requester.Employee.PTOBalance.Current,
+                        currentBalance);
 
                 requester
-                    .UpdatePTOBalance(requestDetails.PTOBalance);
+                    .UpdatePTOBalance(
+                        requester.Employee.PTOBalance.Initial, 
+                        currentBalance, 
+                        requester.Employee.PTOBalance.Updated);
 
                 await this.requesterDomainRepository.Save(requester, cancellationToken);
 

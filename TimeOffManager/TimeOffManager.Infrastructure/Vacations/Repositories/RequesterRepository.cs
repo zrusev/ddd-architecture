@@ -42,7 +42,7 @@
                         .ThenInclude(d => d.RequestDates)
                             .ThenInclude(m => m.RequestType)
                 )
-                .FirstOrDefaultAsync(cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken);
 
         public async Task<RequesterOutputModel> GetDetailsByRequestId(int requestId, CancellationToken cancellationToken = default)
             => await this.mapper
@@ -54,9 +54,12 @@
         public async Task<Requester> GetRequesterByRequestId(int requestId, CancellationToken cancellationToken = default)
             => await this
                     .All()
+                    .Where(d => d.Requests.Any(c => c.Id == requestId))
+                    .Include(u => u.Requests)
+                        .ThenInclude(d => d.RequestDates)
+                            .ThenInclude(m => m.RequestType)
                     .Include(e => e.Employee)
                         .ThenInclude(p => p.PTOBalance)
-                    .Where(d => d.Requests.Any(c => c.Id == requestId))
                     .SingleOrDefaultAsync(cancellationToken);
 
 

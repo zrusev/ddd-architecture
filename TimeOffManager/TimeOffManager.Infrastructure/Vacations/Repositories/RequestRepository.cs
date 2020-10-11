@@ -29,17 +29,6 @@
                 .Select(s => s.Date)
                 .ToListAsync();
 
-        public async Task<List<DateTime>> GetAlreadyRequestedDays(
-            int requesterId,
-            DateTime start,
-            DateTime end,
-            CancellationToken cancellationToken = default)
-            => await this.Data
-                .RequestDates
-                .Where(r => r.Date >= start && r.Date <= end)    
-                .Select(d => d.Date)
-                .ToListAsync();
-
         public async Task<Request> GetRequest(int requestId, CancellationToken cancellationToken = default)
             => await this
                 .All()

@@ -53,7 +53,7 @@
 
         public DateTime RequestedOn { get; } = DateTime.Now;
 
-        public DateTime? ApprovedOn { get; private set; }
+        public DateTime? RevisedOn { get; private set; }
 
         public DateTimeRange DateTimeRange { get; private set; }
         
@@ -112,27 +112,19 @@
             return this;
         }
 
-        public Request UpdateApprovedOn(DateTime approvedOn)
+        public Request UpdateRevisedOn(DateTime revisedOn)
         {
-            this.ApprovedOn = approvedOn;
+            this.RevisedOn = revisedOn;
 
             return this;
         }
 
-        public Request UpdateUpdatedPTOBalance(string requestTypeName)
+        public Request UpdateUpdatedPTOBalance(int? initial, int? current, int? updated)
         {
-            var updated = this.PTOBalance.Current ?? 0;
-
-            if (AllowedTypes.Any(s => s.Name == requestTypeName) &&
-                AllowedTypes.First().Name == requestTypeName)
-            {
-                updated -= this.Days;
-            }
-
             this.PTOBalance = new PTOBalance(
-                    this.PTOBalance.Initial,
-                    this.PTOBalance.Current,
-                    updated);
+                initial,
+                current,
+                updated);
 
             return this;
         }

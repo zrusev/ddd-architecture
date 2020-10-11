@@ -47,12 +47,12 @@
         public void HasEmployee(Employee employee)
             => this.Employee = employee;
 
-        public void UpdatePTOBalance(PTOBalance pTOBalance)
+        public void UpdatePTOBalance(int? initial, int? current, int? updated)
         {
             this.Employee.UpdatePTOBalance(
-                pTOBalance.Initial, 
-                pTOBalance.Current, 
-                pTOBalance.Updated);
+                initial,
+                current,
+                updated);
         }
     }
 }
