@@ -3,6 +3,7 @@
     using Application.Common;
     using Application.Vacations.Requests.Commands.Approve;
     using Application.Vacations.Requests.Commands.Create;
+    using Application.Vacations.Requests.Queries.ByTeam;
     using Application.Vacations.Requests.Queries.Details;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,12 @@
         [Route(Id)]
         public async Task<ActionResult<RequestDetailsOutputModel>> Details(
             [FromRoute] RequestDetailsQuery query)
+            => await this.Send(query);
+
+        [HttpGet]
+        [Route(nameof(Teams) + PathSeparator + Id)]
+        public async Task<ActionResult<ByTeamDetailsOutputModel>> Teams(
+            [FromRoute] ByTeamDetailsQuery query)
             => await this.Send(query);
 
         [HttpPut]

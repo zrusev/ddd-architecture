@@ -2,7 +2,7 @@
 {
     using Common.Contracts;
     using Domain.Vacations.Models.Requesters;
-    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Vacations.Requesters.Queries.Common;
@@ -24,5 +24,7 @@
         Task<RequesterOutputModel> GetDetailsWithRequests(int requesterId, CancellationToken cancellationToken = default);
 
         Task<Requester> GetRequesterByRequestId(int requestId, CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<RequesterOutputModel>> GetDetailsByTeamId(int teamId, CancellationToken cancellationToken = default);
     }
 }

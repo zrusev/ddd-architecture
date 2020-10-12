@@ -9,6 +9,7 @@
     using Domain.Vacations.Repositories;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
@@ -20,11 +21,15 @@
     {
         private readonly IMapper mapper;
 
-        public RequesterRepository(IVacationsDbContext db, IMapper mapper)
+        public RequesterRepository(
+            IVacationsDbContext db, 
+            IMapper mapper)
             : base(db)
             => this.mapper = mapper;
 
-        public async Task<RequesterOutputModel> GetDetails(int id, CancellationToken cancellationToken = default)
+        public async Task<RequesterOutputModel> GetDetails(
+            int id, 
+            CancellationToken cancellationToken = default)
             => await this.mapper
                 .ProjectTo<RequesterOutputModel>(this
                     .All()
@@ -44,14 +49,34 @@
                 )
                 .SingleOrDefaultAsync(cancellationToken);
 
-        public async Task<RequesterOutputModel> GetDetailsByRequestId(int requestId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<RequesterOutputModel>> GetDetailsByTeamId(
+            int teamId, 
+            CancellationToken cancellationToken = default)
+            => await this.mapper
+                .ProjectTo<RequesterOutputModel>(this
+                    .All()
+                    .Where(t => t.Employee.Team!.Id == teamId 
+                        && t.Requests.Any(o => o.Options.IsApproved))
+                    .Include(e => e.Employee)
+                        .ThenInclude(t => t.Team)
+                    .Include(r => r.Requests)
+                        .ThenInclude(d => d.RequestDates)
+                            .ThenInclude(m => m.RequestType)
+                )
+            .ToListAsync(cancellationToken);
+
+        public async Task<RequesterOutputModel> GetDetailsByRequestId(
+            int requestId, 
+            CancellationToken cancellationToken = default)
             => await this.mapper
                 .ProjectTo<RequesterOutputModel>(this
                     .All()
                     .Where(d => d.Requests.Any(c => c.Id == requestId)))
                 .SingleOrDefaultAsync(cancellationToken);
 
-        public async Task<Requester> GetRequesterByRequestId(int requestId, CancellationToken cancellationToken = default)
+        public async Task<Requester> GetRequesterByRequestId(
+            int requestId, 
+            CancellationToken cancellationToken = default)
             => await this
                     .All()
                     .Where(d => d.Requests.Any(c => c.Id == requestId))
@@ -63,17 +88,23 @@
                     .SingleOrDefaultAsync(cancellationToken);
 
 
-        public async Task<Employee> FindByManagerId(int managerId, CancellationToken cancellationToken = default)
+        public async Task<Employee> FindByManagerId(
+            int managerId, 
+            CancellationToken cancellationToken = default)
             => await this.Data
                 .Employees
                 .FirstOrDefaultAsync(i => i.Id == managerId, cancellationToken);
 
-        public async Task<Team> FindByTeamId(int teamId, CancellationToken cancellationToken = default)
+        public async Task<Team> FindByTeamId(
+            int teamId, 
+            CancellationToken cancellationToken = default)
             => await this.Data
                 .Teams
                 .FirstOrDefaultAsync(i => i.Id == teamId, cancellationToken);
 
-        public Task<int> GetRequesterId(string userId, CancellationToken cancellationToken = default)
+        public Task<int> GetRequesterId(
+            string userId, 
+            CancellationToken cancellationToken = default)
             => this.FindByUser(userId, requester => requester.Id, cancellationToken);
 
         public Task<Requester> FindByUser(

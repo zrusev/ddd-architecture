@@ -24,8 +24,6 @@
             => await this.requestQueryRepository.GetDetails(
                     request.Id,
                     cancellationToken);
-
-            //ToDo: Include Approver details to RequestDetailsOutputModel
         }
     }
 }

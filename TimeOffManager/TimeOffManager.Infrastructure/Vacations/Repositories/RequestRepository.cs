@@ -19,17 +19,22 @@
     {
         private readonly IMapper mapper;
 
-        public RequestRepository(IVacationsDbContext db, IMapper mapper)
+        public RequestRepository(
+            IVacationsDbContext db, 
+            IMapper mapper)
             : base(db)
             => this.mapper = mapper;
 
-        public async Task<List<DateTime>> GetNationalHolidays(CancellationToken cancellationToken = default)
+        public async Task<List<DateTime>> GetNationalHolidays(
+            CancellationToken cancellationToken = default)
             => await this.Data
                 .NationalHolidays
                 .Select(s => s.Date)
                 .ToListAsync();
 
-        public async Task<Request> GetRequest(int requestId, CancellationToken cancellationToken = default)
+        public async Task<Request> GetRequest(
+            int requestId, 
+            CancellationToken cancellationToken = default)
             => await this
                 .All()
                 .Where(r => r.Id == requestId)
@@ -37,13 +42,17 @@
                 .ThenInclude(d => d.RequestType)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public async Task<RequestType> GetRequestType(string name, CancellationToken cancellationToken = default)
+        public async Task<RequestType> GetRequestType(
+            string name, 
+            CancellationToken cancellationToken = default)
             => await this.Data
                 .RequestTypes
                 .Where(t => t.Name == name)
                 .FirstOrDefaultAsync();
 
-        public async Task<RequestDetailsOutputModel> GetDetails(int requestId, CancellationToken cancellationToken = default)
+        public async Task<RequestDetailsOutputModel> GetDetails(
+            int requestId, 
+            CancellationToken cancellationToken = default)
             => await this.mapper
                 .ProjectTo<RequestDetailsOutputModel>(this
                     .All()

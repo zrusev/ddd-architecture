@@ -278,7 +278,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Email\": \"test@test6.com\",\n\t\"Password\": \"Test123!!!\"\n}",
+									"raw": "{\n\t\"Email\": \"test@test7.com\",\n\t\"Password\": \"Test123!!!\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -425,7 +425,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWU4MjNlMy05M2U5LTQxYzMtYmU2OS0yZGJhNDEwOTA2MDEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDYuY29tIiwibmJmIjoxNjAyMjU5ODY3LCJleHAiOjE2MDI4NjQ2NjcsImlhdCI6MTYwMjI1OTg2N30.ZmeR19agiG2F48JcAuR2TPdNTQ0mprxwkbRbvORPj6A",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmZTdhMjM2OS1kMGUzLTQ3OGItODUzNi1hMDdlMjY2M2M3NjciLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDcuY29tIiwibmJmIjoxNjAyNDM1NzY5LCJleHAiOjE2MDMwNDA1NjksImlhdCI6MTYwMjQzNTc2OX0.AacC-OQ9V0d16kNO-AtFh0R-W8xte-LR_JilO_uClY8",
 													"type": "string"
 												}
 											]
@@ -567,7 +567,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWU4MjNlMy05M2U5LTQxYzMtYmU2OS0yZGJhNDEwOTA2MDEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDYuY29tIiwibmJmIjoxNjAyMjU5ODY3LCJleHAiOjE2MDI4NjQ2NjcsImlhdCI6MTYwMjI1OTg2N30.ZmeR19agiG2F48JcAuR2TPdNTQ0mprxwkbRbvORPj6A",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmZTdhMjM2OS1kMGUzLTQ3OGItODUzNi1hMDdlMjY2M2M3NjciLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDcuY29tIiwibmJmIjoxNjAyNDM1NzY5LCJleHAiOjE2MDMwNDA1NjksImlhdCI6MTYwMjQzNTc2OX0.AacC-OQ9V0d16kNO-AtFh0R-W8xte-LR_JilO_uClY8",
 													"type": "string"
 												}
 											]
@@ -576,7 +576,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Start\": \"2020-10-20\",\r\n    \"End\": \"2020-10-20\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
+											"raw": "{\r\n    \"Start\": \"2020-10-28\",\r\n    \"End\": \"2020-10-29\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -623,7 +623,7 @@
 											}
 										},
 										"url": {
-											"raw": "https://localhost:5001/Requests/10",
+											"raw": "https://localhost:5001/Requests/19",
 											"protocol": "https",
 											"host": [
 												"localhost"
@@ -631,7 +631,7 @@
 											"port": "5001",
 											"path": [
 												"Requests",
-												"10"
+												"19"
 											]
 										}
 									},
