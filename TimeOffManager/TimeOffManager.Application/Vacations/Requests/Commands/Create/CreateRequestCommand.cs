@@ -7,6 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using TimeOffManager.Application.Common;
+    using TimeOffManager.Application.Common.Entities;
     using TimeOffManager.Domain.Vacations.Exceptions;
     using TimeOffManager.Domain.Vacations.Repositories;
     using Vacations.Requesters;
@@ -32,18 +33,26 @@
 
         public class CreateRequestCommandHandler : IRequestHandler<CreateRequestCommand, Result<CreateRequestOutputModel>>
         {
+            private const string NonExistingManger = "Manager does not exists";
+            private const string NonExistingPTOBalance = "PTO Balance does not exists";
+            private const string ApproveRequestSubject = "Request approval";
+            private const string ApproveRequestBody = "Please approve this request";
+
+
             private readonly ICurrentUser currentUser;
             private readonly IRequestFactory requestFactory;
             private readonly IRequesterQueryRepository requesterQueryRepository;
             private readonly IRequestQueryRepository requestQueryRepository;
             private readonly IRequestDomainRepository requestDomainRepository;
+            private readonly IMailer mailer;
 
             public CreateRequestCommandHandler(
                 ICurrentUser currentUser,
                 IRequestFactory requestFactory,
                 IRequesterQueryRepository requesterQueryRepository,
                 IRequestQueryRepository requestQueryRepository,
-                IRequestDomainRepository requestDomainRepository
+                IRequestDomainRepository requestDomainRepository,
+                IMailer mailer
                 )
             {
                 this.currentUser = currentUser;
@@ -51,6 +60,7 @@
                 this.requesterQueryRepository = requesterQueryRepository;
                 this.requestQueryRepository = requestQueryRepository;
                 this.requestDomainRepository = requestDomainRepository;
+                this.mailer = mailer;
             }
 
             public async Task<Result<CreateRequestOutputModel>> Handle(
@@ -63,10 +73,10 @@
                     cancellationToken);
 
                 var manager = requester.Employee.Manager 
-                    ?? throw new InvalidManagerException("Manager does not exists");
+                    ?? throw new InvalidManagerException(NonExistingManger);
                 
                 var pTOBalance = requester.Employee.PTOBalance 
-                    ?? throw new InvalidPTOBalanceException("PTO Balance does not exists");
+                    ?? throw new InvalidPTOBalanceException(NonExistingPTOBalance);
                 
                 var requestType = await this.requestQueryRepository.GetRequestType(
                     request.RequestTypeName,
@@ -97,6 +107,14 @@
                 requester.AddRequest(vacationRequest);
 
                 await this.requestDomainRepository.Save(vacationRequest, cancellationToken);
+
+                await mailer.SendEmailAsync(
+                    new MailOutputModel(
+                        requester.Employee.Manager.FirstName + " " + requester.Employee.Manager.LastName,
+                        requester.Employee.Manager.Email,
+                        ApproveRequestSubject,
+                        ApproveRequestBody
+                        ));
 
                 return new CreateRequestOutputModel(vacationRequest.Id);
             }

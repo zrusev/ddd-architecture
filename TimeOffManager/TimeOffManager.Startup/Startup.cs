@@ -3,6 +3,7 @@ namespace TimeOffManager.Startup
     using Application;
     using Domain;
     using Infrastructure;
+    using Infrastructure.Common.Entities;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ namespace TimeOffManager.Startup
 
         public void ConfigureServices(IServiceCollection services)
             => services
+                .Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"))
                 .AddDomain()
                 .AddApplication(this.Configuration)
                 .AddInfrastructure(this.Configuration)

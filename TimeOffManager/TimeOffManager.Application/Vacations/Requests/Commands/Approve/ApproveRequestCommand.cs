@@ -2,6 +2,7 @@
 {
     using Common;
     using Common.Contracts;
+    using Common.Entities;
     using Domain.Vacations.Exceptions;
     using Domain.Vacations.Repositories;
     using MediatR;
@@ -23,19 +24,25 @@
         public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand, Result>
         {
             private const string PaidLeaveType = "Paid leave";
+            private const string InvalidApproverMessage = "You are not allowed to approve this request.";
+            private const string DuplicateApprovalMessage = "This request has already been approved.";
+            private const string RequestSubject = "Request approval";
+            private const string RequestBody = "Your request has been ";
 
             private readonly ICurrentUser currentUser;
             private readonly IRequesterQueryRepository requesterQueryRepository;
             private readonly IRequestQueryRepository requestQueryRepository;
             private readonly IRequestDomainRepository requestDomainRepository;
             private readonly IRequesterDomainRepository requesterDomainRepository;
+            private readonly IMailer mailer;
 
             public ApproveRequestCommandHandler(
                 ICurrentUser currentUser,
                 IRequesterQueryRepository requesterQueryRepository,
                 IRequestQueryRepository requestQueryRepository,
                 IRequestDomainRepository requestDomainRepository,
-                IRequesterDomainRepository requesterDomainRepository
+                IRequesterDomainRepository requesterDomainRepository,
+                IMailer mailer
                 )
             {
                 this.currentUser = currentUser;
@@ -43,6 +50,7 @@
                 this.requestQueryRepository = requestQueryRepository;
                 this.requestDomainRepository = requestDomainRepository;
                 this.requesterDomainRepository = requesterDomainRepository;
+                this.mailer = mailer;
             }
 
             public async Task<Result> Handle(
@@ -59,10 +67,10 @@
                     cancellationToken);
 
                 if (requestDetails.ApproverId != approver.Id)
-                    throw new InvalidApproverException("You are not allowed to approve this request.");
+                    throw new InvalidApproverException(InvalidApproverMessage);
 
                 if (requestDetails.Options.IsApproved)
-                    throw new InvalidApproverException("This request has already been approved.");
+                    throw new InvalidApproverException(DuplicateApprovalMessage);
 
                 var requester = await this.requesterQueryRepository.GetRequesterByRequestId(
                     request.Id,
@@ -121,6 +129,14 @@
                 await this.requesterDomainRepository.Save(requester, cancellationToken);
 
                 await this.requestDomainRepository.Save(requestDetails, cancellationToken);
+
+                await mailer.SendEmailAsync(
+                    new MailOutputModel(
+                        requester.Employee.FirstName + " " + requester.Employee.LastName,
+                        requester.Employee.Email,
+                        RequestSubject,
+                        RequestBody + (request.IsApproved ? "approved" : "rejected")
+                        ));
 
                 return Result.Success;
             }

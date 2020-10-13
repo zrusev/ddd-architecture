@@ -4,6 +4,7 @@
 Time-Off Manager is a domain-driven web API for managing employee absences.
 When a user submits a request, it is marked for approval.
 If an approval is performed, the system reduces the user's leave balance accordingly.
+When many requests are submitted for the same day, the latest one approved is considered effective. 
 
 ### Features:
 + Ability to submit, approve, reject requests
@@ -15,6 +16,7 @@ If an approval is performed, the system reduces the user's leave balance accordi
 + Automatically workdays calculation excluding weekends and holidays
 + Manageable public holidays list
 + Reporting functionality
++ Automatic e-mail notifications of requests, approvals and rejections
 
 ### Architecture:
 - Bounded Contexts

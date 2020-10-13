@@ -1,10 +1,12 @@
 ﻿namespace TimeOffManager.Infrastructure
 {
     using Application.Common;
+    using Application.Common.Contracts;
     using Application.Identity;
     using Common;
     using Common.Events;
     using Common.Persistence;
+    using Common.Services;
     using Domain.Common;
     using Identity;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,7 +16,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
-    using TimeOffManager.Application.Common.Contracts;
     using Vacations;
 
     public static class InfrastructureConfiguration
@@ -26,7 +27,8 @@
                 .AddDatabase(configuration)
                 .AddRepositories()
                 .AddIdentity(configuration)
-                .AddTransient<IEventDispatcher, EventDispatcher>();
+                .AddTransient<IEventDispatcher, EventDispatcher>()
+                .AddSingleton<IMailer, Mailer>();
 
         private static IServiceCollection AddDatabase(
             this IServiceCollection services,

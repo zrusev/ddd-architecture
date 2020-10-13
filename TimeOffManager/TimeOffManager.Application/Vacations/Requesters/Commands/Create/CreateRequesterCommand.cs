@@ -29,6 +29,8 @@
 
         public class CreateRequesterCommandHandler : IRequestHandler<CreateRequesterCommand, CreateRequesterOutputModel>
         {
+            private const string DuplicateRegistrationMessage = "Requester has already been registered.";
+
             private readonly ICurrentUser currentUser;
             private readonly IRequesterFactory requesterFactory;
             private readonly IRequesterDomainRepository requesterRepository;
@@ -55,7 +57,7 @@
                 var user = await this.requesterQueryRepository.FindByUser(this.currentUser.UserId);
 
                 if (!(user is null))
-                    throw new InvalidRequesterException("Requester has already been registered.");
+                    throw new InvalidRequesterException(DuplicateRegistrationMessage);
 
                 var manager = await this.requesterQueryRepository
                     .FindByManagerId(request.ManagerId);
