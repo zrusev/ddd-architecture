@@ -1,6 +1,7 @@
 ﻿namespace TimeOffManager.Application.Vacations.Requesters.Commands.Create
 {
     using Common.Contracts;
+    using Domain.Vacations.Exceptions;
     using Domain.Vacations.Factories.Requesters;
     using Domain.Vacations.Repositories;
     using MediatR;
@@ -24,7 +25,7 @@
 
         public int ManagerId { get; set; } = default;
 
-        public int TeamId { get; set; } = default;
+        public string TeamName { get; set; } = default!;
 
         public class CreateRequesterCommandHandler : IRequestHandler<CreateRequesterCommand, CreateRequesterOutputModel>
         {
@@ -51,13 +52,22 @@
                 CancellationToken cancellationToken
                 )
             {
+                var user = await this.requesterQueryRepository.FindByUser(this.currentUser.UserId);
+
+                if (!(user is null))
+                    throw new InvalidRequesterException("Requester has already been registered.");
+
                 var manager = await this.requesterQueryRepository
                     .FindByManagerId(request.ManagerId);
 
                 var team = await this.requesterQueryRepository
-                    .FindByTeamId(request.TeamId);
+                    .FindByTeamName(request.TeamName);
 
-                var requester = this.requesterFactory
+                var factory = team == null
+                    ? this.requesterFactory.WithTeam(request.TeamName)
+                    : this.requesterFactory.WithTeam(team);
+
+                var requester = factory
                     .WithFirstName(request.FirstName)
                     .WithLastName(request.LastName)
                     .WithEmployeeId(request.EmployeeId)
@@ -68,7 +78,6 @@
                         request.PTOCurrent, 
                         null)
                     .WithManager(manager)
-                    .WithTeam(team)
                     .FromUser(this.currentUser.UserId)
                     .Build();
 

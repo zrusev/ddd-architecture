@@ -1,10 +1,9 @@
 ﻿namespace TimeOffManager.Infrastructure.Vacations.Configuration
 {
-    using static Domain.Vacations.Models.ModelConstants.RequestType;
-
     using Domain.Vacations.Models.Requests;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using static Domain.Vacations.Models.ModelConstants.RequestType;
 
     public class RequestTypeConfiguration : IEntityTypeConfiguration<RequestType>
     {

@@ -11,7 +11,7 @@
     {
         Task<Employee> FindByManagerId(int managerId, CancellationToken cancellationToken = default);
 
-        Task<Team> FindByTeamId(int teamId, CancellationToken cancellationToken = default);
+        Task<Team> FindByTeamName(string name, CancellationToken cancellationToken = default);
 
         Task<int> GetRequesterId(string userId, CancellationToken cancellationToken = default);
 

@@ -1,10 +1,9 @@
 ﻿namespace TimeOffManager.Infrastructure.Vacations.Configuration
 {
-    using static Domain.Vacations.Models.ModelConstants.Common;
-
     using Domain.Vacations.Models.Requesters;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using static Domain.Vacations.Models.ModelConstants.Common;
 
     public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {

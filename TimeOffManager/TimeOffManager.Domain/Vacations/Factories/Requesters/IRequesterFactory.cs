@@ -18,8 +18,10 @@
 
         IRequesterFactory WithManager(Employee? manager);
 
-        IRequesterFactory WithTeam(Team? team);
+        IRequesterFactory WithTeam(Team team);
 
+        IRequesterFactory WithTeam(string name);
+        
         IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated);
 
         IRequesterFactory WithHireDate(DateTime? hireDate);

@@ -1,10 +1,9 @@
 ﻿namespace TimeOffManager.Infrastructure.Vacations.Configuration
 {
-    using static Domain.Vacations.Models.ModelConstants.Common;
-
     using Domain.Vacations.Models.Requesters;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using static Domain.Vacations.Models.ModelConstants.Common;
 
     public class TeamConfiguration : IEntityTypeConfiguration<Team>
     {
@@ -14,14 +13,13 @@
                 .HasKey(d => d.Id);
 
             builder
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder
                 .Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(MaxNameLength);
-
-            builder
-                .Property(p => p.Description)
-                .IsRequired()
-                .HasMaxLength(MaxDescriptionLength);
         }
     }
 }

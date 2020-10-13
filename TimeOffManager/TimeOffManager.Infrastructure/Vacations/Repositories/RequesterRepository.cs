@@ -95,12 +95,12 @@
                 .Employees
                 .FirstOrDefaultAsync(i => i.Id == managerId, cancellationToken);
 
-        public async Task<Team> FindByTeamId(
-            int teamId, 
+        public async Task<Team> FindByTeamName(
+            string name, 
             CancellationToken cancellationToken = default)
             => await this.Data
                 .Teams
-                .FirstOrDefaultAsync(i => i.Id == teamId, cancellationToken);
+                .FirstOrDefaultAsync(i => i.Name == name, cancellationToken);
 
         public Task<int> GetRequesterId(
             string userId, 

@@ -3,6 +3,7 @@
     using Models.Requesters;
     using Models.Shared;
     using System;
+    using Vacations.Exceptions;
 
     public class RequesterFactory : IRequesterFactory
     {
@@ -74,9 +75,21 @@
             return this;
         }
 
-        public IRequesterFactory WithTeam(Team? team)
+        public IRequesterFactory WithTeam(Team team)
         {
-            this.team = team!;
+            this.team = team;
+
+            return this;
+        }
+
+        public IRequesterFactory WithTeam(string name)
+        {
+            if (String.IsNullOrEmpty(name))
+            {
+                throw new InvalidTeamException("Taem name cannot be blank.");
+            }
+
+            this.team = new Team(name);
 
             return this;
         }

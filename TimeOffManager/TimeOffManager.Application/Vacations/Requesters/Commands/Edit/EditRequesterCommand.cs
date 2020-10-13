@@ -31,7 +31,7 @@
 
         public int ManagerId { get; set; } = default;
 
-        public int TeamId { get; set; } = default;
+        public string TeamName { get; set; } = default!;
 
         public class EditRequesterCommandHandler : IRequestHandler<EditRequesterCommand, Result>
         {
@@ -60,13 +60,11 @@
                     cancellationToken);
 
                 if (request.Id != requester.Id)
-                {
                     throw new InvalidRequesterException("You cannot edit this requester.");
-                }
 
                 var manager = await this.requesterQueryRepository.FindByManagerId(request.ManagerId);
 
-                var team = await this.requesterQueryRepository.FindByTeamId(request.TeamId);
+                var team = await this.requesterQueryRepository.FindByTeamName(request.TeamName);
 
                 requester.Employee
                     .UpdateFirstName(request.FirstName)
