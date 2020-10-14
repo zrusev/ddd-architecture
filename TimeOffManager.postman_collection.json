@@ -278,7 +278,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"Email\": \"test@test9.com\",\n\t\"Password\": \"Test123!!!\"\n}",
+									"raw": "{\n\t\"Email\": \"test@user.com\",\n\t\"Password\": \"Test123!!!\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -425,7 +425,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiMzY1OGY5NS00MWU3LTQ4NTAtYjY2ZC0wYTYxYzQ3NmQyZDEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDkuY29tIiwibmJmIjoxNjAyNTg3Nzk4LCJleHAiOjE2MDMxOTI1OTgsImlhdCI6MTYwMjU4Nzc5OH0.Q4EQRRyf8R5hyHCuqi5jyZN_YRG1Nzgn8-CVSXMtRlc",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwNjVmNWIwMC0yM2Q3LTQwNzctYjljMi0zYzY3ZmI2YTZkOWEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdXNlci5jb20iLCJuYmYiOjE2MDI3MDE3ODksImV4cCI6MTYwMzMwNjU4OSwiaWF0IjoxNjAyNzAxNzg5fQ.DPCp53Ny-GbBcuiF41Oz_WusleHEpnPNMXXpYBv8SMM",
 													"type": "string"
 												}
 											]
@@ -496,7 +496,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"firstName\": \"User\",\n\t\"lastName\": \"Name\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/cat/\",\n    \"pTOInitial\": 20,\n    \"pTOCurrent\": 20,\n    \"ManagerId\": 1,\n    \"teamName\": \"Hufflepuff\"\n}",
+											"raw": "{\n\t\"firstName\": \"Test\",\n\t\"lastName\": \"User\",\n\t\"employeeId\": \"123456\",\n\t\"imageUrl\": \"https://pixabay.com/images/search/cat/\",\n    \"pTOInitial\": 20,\n    \"pTOCurrent\": 20,\n    \"ManagerId\": 1,\n    \"teamName\": \"Hufflepuff\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -567,7 +567,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmZTdhMjM2OS1kMGUzLTQ3OGItODUzNi1hMDdlMjY2M2M3NjciLCJ1bmlxdWVfbmFtZSI6InRlc3RAdGVzdDcuY29tIiwibmJmIjoxNjAyNDM1NzY5LCJleHAiOjE2MDMwNDA1NjksImlhdCI6MTYwMjQzNTc2OX0.AacC-OQ9V0d16kNO-AtFh0R-W8xte-LR_JilO_uClY8",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwNjVmNWIwMC0yM2Q3LTQwNzctYjljMi0zYzY3ZmI2YTZkOWEiLCJ1bmlxdWVfbmFtZSI6InRlc3RAdXNlci5jb20iLCJuYmYiOjE2MDI3MDE3ODksImV4cCI6MTYwMzMwNjU4OSwiaWF0IjoxNjAyNzAxNzg5fQ.DPCp53Ny-GbBcuiF41Oz_WusleHEpnPNMXXpYBv8SMM",
 													"type": "string"
 												}
 											]
@@ -576,7 +576,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Start\": \"2020-10-28\",\r\n    \"End\": \"2020-10-29\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
+											"raw": "{\r\n    \"Start\": \"2020-10-30\",\r\n    \"End\": \"2020-10-30\",\r\n    \"RequestTypeName\": \"Paid leave\",\r\n    \"Hours\": \"08:00:00\",\r\n    \"RequesterComment\": \"Vacation request please.\",\r\n    \"IsPlanning\": false,\r\n    \"ExcludeHolidays\": true,\r\n    \"ExcludeWeekends\": true\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -623,7 +623,7 @@
 											}
 										},
 										"url": {
-											"raw": "https://localhost:5001/Requests/19",
+											"raw": "https://localhost:5001/Requests/26",
 											"protocol": "https",
 											"host": [
 												"localhost"
@@ -631,7 +631,7 @@
 											"port": "5001",
 											"path": [
 												"Requests",
-												"19"
+												"26"
 											]
 										}
 									},
@@ -650,7 +650,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "https://localhost:5001/Requests/12",
+											"raw": "https://localhost:5001/Requests/25",
 											"protocol": "https",
 											"host": [
 												"localhost"
@@ -658,7 +658,7 @@
 											"port": "5001",
 											"path": [
 												"Requests",
-												"12"
+												"25"
 											]
 										}
 									},
@@ -670,7 +670,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "https://localhost:5001/Requests/Teams/1",
+											"raw": "https://localhost:5001/Requests/Teams/2",
 											"protocol": "https",
 											"host": [
 												"localhost"
@@ -679,7 +679,7 @@
 											"path": [
 												"Requests",
 												"Teams",
-												"1"
+												"2"
 											]
 										}
 									},

@@ -115,8 +115,7 @@
             string userId,
             Expression<Func<Requester, T>> selector,
             CancellationToken cancellationToken = default)
-        {
-            var requesterData = await this
+            =>  await this
                 .All()
                 .Where(u => u.UserId == userId)
                 .Include(i => i.Employee)
@@ -124,13 +123,5 @@
                 .Include(p => p.Employee.PTOBalance)
                 .Select(selector)
                 .SingleOrDefaultAsync(cancellationToken);
-
-            if (requesterData == null)
-            {
-                throw new InvalidRequesterException("This user is not a requester.");
-            }
-
-            return requesterData;
-        }
     }
 }
