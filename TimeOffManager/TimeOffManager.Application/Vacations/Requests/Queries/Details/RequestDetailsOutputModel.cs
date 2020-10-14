@@ -31,12 +31,6 @@
 
         public bool ExcludeWeekends { get; private set; }
 
-        public int? Initial { get; private set; }
-
-        public int? Current { get; private set; }
-
-        public int? Updated { get; private set; }
-
         public virtual void Mapping(Profile mapper)
             => mapper
                 .CreateMap<Request, RequestDetailsOutputModel>()
@@ -48,12 +42,6 @@
                     .MapFrom(ad => ad.Options.ExcludeHolidays))
                 .ForMember(r => r.ExcludeWeekends, cfg => cfg
                     .MapFrom(ad => ad.Options.ExcludeWeekends))
-                .ForMember(r => r.Initial, cfg => cfg
-                    .MapFrom(ad => ad.PTOBalance.Initial))
-                .ForMember(r => r.Current, cfg => cfg
-                    .MapFrom(ad => ad.PTOBalance.Current))
-                .ForMember(r => r.Updated, cfg => cfg
-                    .MapFrom(ad => ad.PTOBalance.Updated))
                 .ForMember(r => r.Start, cfg => cfg
                     .MapFrom(ad => ad.DateTimeRange.Start))
                 .ForMember(r => r.End, cfg => cfg

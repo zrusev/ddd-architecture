@@ -5,7 +5,7 @@
     using System.Linq;
     using Vacations.Exceptions;
     using Vacations.Models.Requests;
-    using Vacations.Models.Shared;
+    using Vacations.Services.Models;
 
     public class CurrentBalanceService : ICurrentBalanceService
     {

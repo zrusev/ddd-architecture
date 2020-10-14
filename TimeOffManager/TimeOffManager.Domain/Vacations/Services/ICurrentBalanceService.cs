@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Vacations.Models.Requests;
-    using Vacations.Models.Shared;
+    using Vacations.Services.Models;
 
     public interface ICurrentBalanceService
     {

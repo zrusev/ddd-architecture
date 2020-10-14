@@ -87,7 +87,6 @@
                         .ThenInclude(p => p.PTOBalance)
                     .SingleOrDefaultAsync(cancellationToken);
 
-
         public async Task<Employee> FindByManagerId(
             int managerId, 
             CancellationToken cancellationToken = default)

@@ -1,4 +1,4 @@
-﻿namespace TimeOffManager.Domain.Vacations.Models.Shared
+﻿namespace TimeOffManager.Domain.Vacations.Services.Models
 {
     using System;
     

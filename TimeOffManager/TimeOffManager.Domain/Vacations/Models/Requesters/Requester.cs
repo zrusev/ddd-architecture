@@ -4,7 +4,6 @@
     using Common.Models;
     using System.Collections.Generic;
     using System.Linq;
-    using TimeOffManager.Domain.Vacations.Models.Shared;
     using Vacations.Events.Requests;
     using Vacations.Models.Requests;
 
@@ -47,12 +46,7 @@
         public void HasEmployee(Employee employee)
             => this.Employee = employee;
 
-        public void UpdatePTOBalance(int? initial, int? current, int? updated)
-        {
-            this.Employee.UpdatePTOBalance(
-                initial,
-                current,
-                updated);
-        }
+        public void UpdatePTOBalance(int? initial, int? current)
+            => this.Employee.UpdatePTOBalance(initial, current);
     }
 }

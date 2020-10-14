@@ -74,10 +74,10 @@
 
                 var manager = requester.Employee.Manager 
                     ?? throw new InvalidManagerException(NonExistingManger);
-                
-                var pTOBalance = requester.Employee.PTOBalance 
+
+                var pTOBalance = requester.Employee.PTOBalance
                     ?? throw new InvalidPTOBalanceException(NonExistingPTOBalance);
-                
+
                 var requestType = await this.requestQueryRepository.GetRequestType(
                     request.RequestTypeName,
                     cancellationToken);
@@ -90,7 +90,6 @@
                     .WithDays(request.Start, request.End)
                     .WithApprover(manager.Id)
                     .WithRequesterComment(request.RequesterComment)
-                    .WithPTOBalance(pTOBalance)
                     .WithRequestDates(
                         requestType,
                         request.Hours,

@@ -1,6 +1,6 @@
 ﻿namespace TimeOffManager.Application.Vacations.Requests.Queries.ByTeam
 {
-    using Domain.Vacations.Models.Shared;
+    using Domain.Vacations.Services.Models;
     using System;
 
     public class ByTeamRequestDateDetailsModel : RequestDateDetailsModel

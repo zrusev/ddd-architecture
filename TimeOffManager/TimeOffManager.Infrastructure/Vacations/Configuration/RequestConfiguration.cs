@@ -48,15 +48,15 @@
                     o.Property(op => op.ExcludeHolidays);
                 });
 
-            builder
-                .OwnsOne(c => c.PTOBalance, o =>
-                {
-                    o.WithOwner();
+            //builder
+            //    .OwnsOne(c => c.PTOBalance, o =>
+            //    {
+            //        o.WithOwner();
 
-                    o.Property(op => op.Initial);
-                    o.Property(op => op.Current);
-                    o.Property(op => op.Updated);
-                });
+            //        o.Property(op => op.Initial);
+            //        o.Property(op => op.Current);
+            //        o.Property(op => op.Updated);
+            //    });
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Factories.Requests
 {
-    using Models.Shared;
     using Models.Requests;
     using System;
     using System.Collections.Generic;
@@ -14,7 +13,6 @@
         private string? requesterComment = default!;
         private string? approverComment = default!;
         private Options options = default!;
-        private PTOBalance? pTOBalance = default!;
 
         public RequestFactory()
         {
@@ -27,13 +25,6 @@
             {
                 this.approverId = approverId;
             }
-
-            return this;
-        }
-
-        public IRequestFactory WithPTOBalance(PTOBalance balance)
-        {
-            this.pTOBalance = new PTOBalance(balance.Initial, balance.Current, balance.Updated);
 
             return this;
         }
@@ -126,8 +117,7 @@
                 this.approverId,
                 this.requesterComment,
                 this.approverComment,
-                this.options,
-                this.pTOBalance
+                this.options
                 );
     }
 }

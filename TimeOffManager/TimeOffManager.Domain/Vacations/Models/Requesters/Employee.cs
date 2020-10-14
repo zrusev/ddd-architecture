@@ -3,7 +3,6 @@
     using Domain.Common.Models;
     using System;
     using Vacations.Exceptions;
-    using Vacations.Models.Shared;
     using static ModelConstants.Common;
 
     public class Employee : Entity<int>
@@ -137,17 +136,16 @@
 
         public Employee UpdatePTOBalance(
             int? initial,
-            int? current,
-            int? updated
+            int? current
             )
         {
             if (initial is null || current is null)
             {
-                this.PTOBalance = new PTOBalance(0, 0, 0);
+                this.PTOBalance = new PTOBalance(0, 0);
             }
             else
             {
-                this.PTOBalance = new PTOBalance(initial, current, updated);
+                this.PTOBalance = new PTOBalance(initial, current);
             }
 
             return this;

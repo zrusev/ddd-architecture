@@ -1,7 +1,6 @@
 ﻿namespace TimeOffManager.Domain.Vacations.Factories.Requesters
 {
     using Models.Requesters;
-    using Models.Shared;
     using System;
     using Vacations.Exceptions;
 
@@ -86,7 +85,7 @@
         {
             if (String.IsNullOrEmpty(name))
             {
-                throw new InvalidTeamException("Taem name cannot be blank.");
+                throw new InvalidTeamException("Team name cannot be blank.");
             }
 
             this.team = new Team(name);
@@ -94,9 +93,9 @@
             return this;
         }
 
-        public IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated = null)
+        public IRequesterFactory WithPTOBalance(int? initial, int? current)
         {
-            this.pTOBalance = new PTOBalance(initial, current, updated);
+            this.pTOBalance = new PTOBalance(initial, current);
 
             return this;
         }

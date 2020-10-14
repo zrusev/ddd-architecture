@@ -4,13 +4,10 @@
     using Models.Requests;
     using System;
     using System.Collections.Generic;
-    using TimeOffManager.Domain.Vacations.Models.Shared;
-
+    
     public interface IRequestFactory : IFactory<Request>
     {
         IRequestFactory WithPeriod(DateTime start, DateTime end);
-
-        IRequestFactory WithPTOBalance(PTOBalance balance);
 
         IRequestFactory WithApprover(int? approverId);
 

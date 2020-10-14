@@ -75,7 +75,7 @@
                     .UpdateEmail(this.currentUser.UserEmail)
                     .UpdateHireDate(request.HireDate)
                     .UpdateLeaveDate(request.LeaveDate)
-                    .UpdatePTOBalance(request.Initial, request.Current, request.Updated)
+                    .UpdatePTOBalance(request.Initial, request.Current)
                     .UpdateManager(manager)
                     .UpdateTeam(team);
 

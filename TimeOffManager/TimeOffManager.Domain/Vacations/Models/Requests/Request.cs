@@ -4,14 +4,9 @@
     using Common.Models;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Vacations.Models.Shared;
 
     public class Request: Entity<int>, IAggregateRoot
     {
-        private static readonly IEnumerable<RequestType> AllowedTypes
-            = new RequestTypeData().GetData().Cast<RequestType>();
-
         internal Request(
             DateTimeRange dateTimeRange,
             int days,
@@ -19,8 +14,7 @@
             int? approverId,
             string? requesterComment,
             string? approverComment,
-            Options options,
-            PTOBalance? pTOBalance
+            Options options
             )
         {
             this.DateTimeRange = dateTimeRange;
@@ -30,7 +24,6 @@
             this.RequesterComment = requesterComment;
             this.ApproverComment = approverComment;
             this.Options = options;
-            this.PTOBalance = pTOBalance!;
         }
 
         private Request(
@@ -48,7 +41,6 @@
             this.DateTimeRange = default!;
             this.RequestDates = new HashSet<RequestDate>();
             this.Options = default!;
-            this.PTOBalance = default!;
         }
 
         public DateTime RequestedOn { get; } = DateTime.Now;
@@ -68,8 +60,6 @@
         public string? ApproverComment { get; private set; }
 
         public Options Options { get; private set; }
-
-        public PTOBalance PTOBalance { get; private set; }
 
         public Request UpdateOptions(
             bool isApproved,
@@ -115,16 +105,6 @@
         public Request UpdateRevisedOn(DateTime revisedOn)
         {
             this.RevisedOn = revisedOn;
-
-            return this;
-        }
-
-        public Request UpdateUpdatedPTOBalance(int? initial, int? current, int? updated)
-        {
-            this.PTOBalance = new PTOBalance(
-                initial,
-                current,
-                updated);
 
             return this;
         }

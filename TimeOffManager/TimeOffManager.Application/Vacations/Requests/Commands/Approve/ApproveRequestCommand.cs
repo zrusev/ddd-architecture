@@ -4,9 +4,9 @@
     using Common.Contracts;
     using Common.Entities;
     using Domain.Vacations.Exceptions;
-    using Domain.Vacations.Models.Shared;
     using Domain.Vacations.Repositories;
     using Domain.Vacations.Services;
+    using Domain.Vacations.Services.Models;
     using MediatR;
     using System;
     using System.Linq;
@@ -104,22 +104,21 @@
                     currentBalance,
                     requestDetails.RequestDates,
                     lastRequestedDates);
-                
+
                 requestDetails
                     .UpdateApprover(approver.Id)
                     .UpdateApproverComment(request.ApproverComment)
                     .UpdateIsApproved(request.IsApproved)
-                    .UpdateRevisedOn(request.RevisedOn)
-                    .UpdateUpdatedPTOBalance(
-                        requester.Employee.PTOBalance.Initial,
-                        requester.Employee.PTOBalance.Current,
-                        newBalance);
+                    .UpdateRevisedOn(request.RevisedOn);
+                    //.UpdateUpdatedPTOBalance(
+                    //    requester.Employee.PTOBalance.Initial,
+                    //    requester.Employee.PTOBalance.Current,
+                    //    newBalance);
 
                 requester
                     .UpdatePTOBalance(
                         requester.Employee.PTOBalance.Initial,
-                        newBalance, 
-                        requester.Employee.PTOBalance.Updated);
+                        newBalance);
 
                 await this.requesterDomainRepository.Save(requester, cancellationToken);
 

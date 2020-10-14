@@ -75,10 +75,7 @@
                     .WithEmployeeId(request.EmployeeId)
                     .WithEmail(this.currentUser.UserEmail)
                     .WithImageUrl(request.ImageUrl)
-                    .WithPTOBalance(
-                        request.PTOInitial, 
-                        request.PTOCurrent, 
-                        null)
+                    .WithPTOBalance(request.PTOInitial, request.PTOCurrent)
                     .WithManager(manager)
                     .FromUser(this.currentUser.UserId)
                     .Build();

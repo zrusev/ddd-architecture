@@ -22,7 +22,7 @@
 
         IRequesterFactory WithTeam(string name);
         
-        IRequesterFactory WithPTOBalance(int? initial, int? current, int? updated);
+        IRequesterFactory WithPTOBalance(int? initial, int? current);
 
         IRequesterFactory WithHireDate(DateTime? hireDate);
 
