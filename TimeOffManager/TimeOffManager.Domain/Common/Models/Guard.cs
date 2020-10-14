@@ -27,6 +27,17 @@
             ThrowException<TException>($"{name} cannot be null ot empty.");
         }
 
+        public static void AgainstLaterDateTime<TException>(DateTime t1, DateTime t2, string t1Name = "Value", string t2Name = "Value")
+            where TException : BaseDomainException, new()
+        {
+            if (DateTime.Compare(t1, t2) <= 0)
+            {
+                return;
+            }
+
+            ThrowException<TException>($"{t1Name} cannot be later then {t2Name}.");
+        }
+
         public static void ForStringLength<TException>(string value, int minLength, int maxLength, string name = "Value")
             where TException : BaseDomainException, new()
         {

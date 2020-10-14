@@ -3,12 +3,17 @@
     using System;
     using System.Collections.Generic;
     using Common.Models;
+    using Vacations.Exceptions;
 
     public class DateTimeRange : ValueObject
     {
         internal DateTimeRange(DateTime start, DateTime end)
         {
-            // Validate end date is after start date.
+            this.ValidateDates(
+                start, 
+                end, 
+                nameof(this.Start), 
+                nameof(this.End));
 
             this.Start = start;
             this.End = end;
@@ -58,6 +63,23 @@
             }
 
             return dates;
+        }
+
+        private void ValidateDate(DateTime date, string property)
+            => Guard.AgainstEmptyDateTime<InvalidDateTimeException>(
+                date,
+                property);
+
+        private void ValidateDates(DateTime start, DateTime end, string startProperty, string endProperty)
+        {
+            this.ValidateDate(start, startProperty);
+            this.ValidateDate(start, endProperty);
+
+            Guard.AgainstLaterDateTime<InvalidDateTimeException>(
+                    start,
+                    end,
+                    startProperty,
+                    endProperty);
         }
     }
 }

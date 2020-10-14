@@ -163,7 +163,6 @@
             return this;
         }
 
-
         public Employee UpdateTeam(Team? team)
         {
             if (!(team is null))
@@ -204,6 +203,5 @@
                 EIDLength,
                 EIDLength,
                 nameof(this.EmployeeId));
-
     }
 }
