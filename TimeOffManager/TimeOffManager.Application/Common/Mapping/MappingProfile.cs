@@ -12,11 +12,16 @@
 
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
+            var mapFromType = typeof(IMapFrom<>);
+            var mapToType = typeof(IMapTo<>);
+
             var types = assembly
                 .GetExportedTypes()
                 .Where(t => t
                     .GetInterfaces()
-                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+                    .Any(i => i.IsGenericType && 
+                        (i.GetGenericTypeDefinition() == mapFromType || 
+                         i.GetGenericTypeDefinition() == mapToType)))
                 .ToList();
 
             foreach (var type in types)
@@ -26,7 +31,8 @@
                 const string mappingMethodName = "Mapping";
 
                 var methodInfo = type.GetMethod(mappingMethodName)
-                                 ?? type.GetInterface("IMapFrom`1")?.GetMethod(mappingMethodName);
+                                 ?? type.GetInterface("IMapFrom`1")?.GetMethod(mappingMethodName)
+                                 ?? type.GetInterface("IMapTo`1")?.GetMethod(mappingMethodName);
 
                 methodInfo?.Invoke(instance, new object[] { this });
             }

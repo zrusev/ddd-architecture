@@ -9,7 +9,7 @@
     {
         public DateTime RequestedOn { get; private set; }
 
-        public DateTime? ApprovedOn { get; private set; }
+        public DateTime? RevisedOn { get; private set; }
 
         public DateTime Start { get; private set; }
 

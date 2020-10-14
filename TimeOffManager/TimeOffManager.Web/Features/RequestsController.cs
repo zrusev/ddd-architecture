@@ -7,6 +7,7 @@
     using Application.Vacations.Requests.Queries.Details;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class RequestsController : ApiController
@@ -26,7 +27,7 @@
 
         [HttpGet]
         [Route(nameof(Teams) + PathSeparator + Id)]
-        public async Task<ActionResult<ByTeamDetailsOutputModel>> Teams(
+        public async Task<ActionResult<IEnumerable<ByTeamDetailsOutputModel>>> Teams(
             [FromRoute] ByTeamDetailsQuery query)
             => await this.Send(query);
 
