@@ -25,6 +25,8 @@
 
         public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand, Result>
         {
+            private static bool IsDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
             private const string InvalidApproverMessage = "You are not allowed to approve this request.";
             private const string DuplicateApprovalMessage = "This request has already been approved.";
             private const string RequestSubject = "Request approval";
@@ -70,7 +72,9 @@
                     request.Id,
                     cancellationToken);
 
-                if (requestDetails.ApproverId != approver.Id)
+                
+
+                if (requestDetails.ApproverId != approver.Id && !IsDevelopment)
                     throw new InvalidApproverException(InvalidApproverMessage);
 
                 if (requestDetails.Options.IsApproved)
@@ -100,7 +104,7 @@
                 var currentBalance = requester
                     .Employee.PTOBalance!.Current ?? 0;
 
-                var newBalance = this.currentBalanceService.Calculate(
+                var revisedBalance = this.currentBalanceService.Calculate(
                     currentBalance,
                     requestDetails.RequestDates,
                     lastRequestedDates);
@@ -110,15 +114,17 @@
                     .UpdateApproverComment(request.ApproverComment)
                     .UpdateIsApproved(request.IsApproved)
                     .UpdateRevisedOn(request.RevisedOn);
-                    //.UpdateUpdatedPTOBalance(
-                    //    requester.Employee.PTOBalance.Initial,
-                    //    requester.Employee.PTOBalance.Current,
-                    //    newBalance);
 
                 requester
                     .UpdatePTOBalance(
                         requester.Employee.PTOBalance.Initial,
-                        newBalance);
+                        revisedBalance);
+                
+                requester
+                    .ApproveRequest(
+                        requestDetails.Id,
+                        currentBalance, 
+                        revisedBalance);
 
                 await this.requesterDomainRepository.Save(requester, cancellationToken);
 

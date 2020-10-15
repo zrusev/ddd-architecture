@@ -15,6 +15,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Statistics;
     using System.Text;
     using Vacations;
 
@@ -40,6 +41,7 @@
                         sqlServer => sqlServer
                             .MigrationsAssembly(typeof(TimeOffManagerDbContext).Assembly.FullName)))
                 .AddScoped<IVacationsDbContext>(provider => provider.GetService<TimeOffManagerDbContext>())
+                .AddScoped<IStatisticsDbContext>(provider => provider.GetService<TimeOffManagerDbContext>())
                 .AddTransient<IInitializer, DatabaseInitializer>();
 
         internal static IServiceCollection AddRepositories(this IServiceCollection services)

@@ -18,8 +18,8 @@
 
             builder
                 .Property(p => p.Name)
-                .IsRequired()
-                .HasMaxLength(MaxNameLength);
+                .HasMaxLength(MaxNameLength)
+                .IsRequired();
         }
     }
 }

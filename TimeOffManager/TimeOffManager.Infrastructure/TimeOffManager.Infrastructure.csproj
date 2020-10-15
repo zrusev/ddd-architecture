@@ -16,6 +16,10 @@
     <Compile Remove="Common\Persistence\Migrations\20200928144859_InitialMigration.Designer.cs" />
     <Compile Remove="Common\Persistence\Migrations\20200928192934_ModelsMigration.cs" />
     <Compile Remove="Common\Persistence\Migrations\20200928192934_ModelsMigration.Designer.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20201015160910_StatisticsMigration.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20201015160910_StatisticsMigration.Designer.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20201015164417_StatisticsUpdateMigration.cs" />
+    <Compile Remove="Common\Persistence\Migrations\20201015164417_StatisticsUpdateMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

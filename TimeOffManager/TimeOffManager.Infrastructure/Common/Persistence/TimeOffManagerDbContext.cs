@@ -1,6 +1,7 @@
 ﻿namespace TimeOffManager.Infrastructure.Common.Persistence
 {
     using Domain.Common.Models;
+    using Domain.Statistics.Models;
     using Domain.Vacations.Models.Requesters;
     using Domain.Vacations.Models.Requests;
     using Events;
@@ -8,6 +9,7 @@
     using Infrastructure.Vacations;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using Statistics;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -15,7 +17,8 @@
     using System.Threading.Tasks;
 
     internal class TimeOffManagerDbContext : IdentityDbContext<User>,
-        IVacationsDbContext
+        IVacationsDbContext,
+        IStatisticsDbContext
     {
         private readonly IEventDispatcher eventDispatcher;
         private readonly Stack<object> savesChangesTracker;
@@ -43,6 +46,10 @@
         public DbSet<RequestDate> RequestDates { get; set; } = default!;
 
         public DbSet<RequestType> RequestTypes { get; set; } = default!;
+
+        public DbSet<Statistic> Statistics { get; set; } = default!;
+
+        public DbSet<BalanceRecord> BalanceRecords { get; set; } = default!;
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

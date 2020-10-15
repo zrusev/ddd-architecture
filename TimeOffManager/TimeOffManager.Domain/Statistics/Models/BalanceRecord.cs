@@ -1,14 +1,18 @@
-﻿namespace TimeOffManager.Domain.Vacations.Events.Requests
+﻿namespace TimeOffManager.Domain.Statistics.Models
 {
-    using Common;
-
-    public class RequestAddedEvent : IDomainEvent
+    using Common.Models;
+    
+    public class BalanceRecord : Entity<int>
     {
-        public RequestAddedEvent(int requestId, int currentBalance, int revisedBalance)
+        internal BalanceRecord(int requestId, int currentBalance, int revisedBalance)
         {
             this.RequestId = requestId;
             this.CurrentBalance = currentBalance;
             this.RevisedBalance = revisedBalance;
+        }
+
+        private BalanceRecord()
+        {
         }
 
         public int RequestId { get; private set; }

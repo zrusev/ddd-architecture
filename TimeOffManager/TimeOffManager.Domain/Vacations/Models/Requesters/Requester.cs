@@ -37,12 +37,11 @@
         public IReadOnlyCollection<Request> Requests => this.requests.ToList().AsReadOnly();
 
         public void AddRequest(Request request)
-        {
-            this.requests.Add(request);
-
-            this.RaiseEvent(new RequestAddedEvent());
-        }
-
+            => this.requests.Add(request);
+        
+        public void ApproveRequest(int requestId, int currentBalance, int revisedBalance)
+            => this.RaiseEvent(new RequestAddedEvent(requestId, currentBalance, revisedBalance));
+        
         public void HasEmployee(Employee employee)
             => this.Employee = employee;
 
