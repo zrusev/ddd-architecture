@@ -4,6 +4,8 @@
 
     public class InvalidManagerException : BaseDomainException
     {
+        public const string NonExistingManger = "Manager does not exists";
+
         public InvalidManagerException()
         {
         }

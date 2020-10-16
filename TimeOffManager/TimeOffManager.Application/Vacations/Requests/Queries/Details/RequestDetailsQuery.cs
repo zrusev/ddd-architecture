@@ -11,19 +11,15 @@
         {
             private readonly IRequestQueryRepository requestQueryRepository;
 
-            public RequestDetailsQueryHandler(
-                IRequestQueryRepository requestQueryRepository
-                )
-            {
-                this.requestQueryRepository = requestQueryRepository;
-            }
+            public RequestDetailsQueryHandler(IRequestQueryRepository requestQueryRepository)
+                => this.requestQueryRepository = requestQueryRepository;
 
             public async Task<RequestDetailsOutputModel> Handle(
                 RequestDetailsQuery request, 
                 CancellationToken cancellationToken)
-            => await this.requestQueryRepository.GetDetails(
-                    request.Id,
-                    cancellationToken);
+                => await this.requestQueryRepository.GetDetails(
+                        request.Id,
+                        cancellationToken);
         }
     }
 }

@@ -33,12 +33,6 @@
 
         public class CreateRequestCommandHandler : IRequestHandler<CreateRequestCommand, Result<CreateRequestOutputModel>>
         {
-            private const string NonExistingManger = "Manager does not exists";
-            private const string NonExistingPTOBalance = "PTO Balance does not exists";
-            private const string ApproveRequestSubject = "Request approval";
-            private const string ApproveRequestBody = "Please approve this request";
-
-
             private readonly ICurrentUser currentUser;
             private readonly IRequestFactory requestFactory;
             private readonly IRequesterQueryRepository requesterQueryRepository;
@@ -73,10 +67,10 @@
                     cancellationToken);
 
                 var manager = requester.Employee.Manager 
-                    ?? throw new InvalidManagerException(NonExistingManger);
+                    ?? throw new InvalidManagerException(InvalidManagerException.NonExistingManger);
 
                 var pTOBalance = requester.Employee.PTOBalance
-                    ?? throw new InvalidPTOBalanceException(NonExistingPTOBalance);
+                    ?? throw new InvalidPTOBalanceException(InvalidPTOBalanceException.NonExistingPTOBalance);
 
                 var requestType = await this.requestQueryRepository.GetRequestType(
                     request.RequestTypeName,
@@ -111,9 +105,8 @@
                     new MailOutputModel(
                         requester.Employee.Manager.FirstName + " " + requester.Employee.Manager.LastName,
                         requester.Employee.Manager.Email,
-                        ApproveRequestSubject,
-                        ApproveRequestBody
-                        ));
+                        MailOutputModel.CreateCommandRequestSubject,
+                        MailOutputModel.CreateCommandRequestBody));
 
                 return new CreateRequestOutputModel(vacationRequest.Id);
             }

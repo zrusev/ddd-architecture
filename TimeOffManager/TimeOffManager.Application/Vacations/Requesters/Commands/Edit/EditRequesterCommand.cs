@@ -35,8 +35,6 @@
 
         public class EditRequesterCommandHandler : IRequestHandler<EditRequesterCommand, Result>
         {
-            private const string InvalidRequestMessage = "You cannot edit this requester.";
-
             private readonly ICurrentUser currentUser;
             private readonly IRequesterDomainRepository requesterRepository;
             private readonly IRequesterQueryRepository requesterQueryRepository;
@@ -62,11 +60,13 @@
                     cancellationToken);
 
                 if (request.Id != requester.Id)
-                    throw new InvalidRequesterException(InvalidRequestMessage);
+                    throw new InvalidRequesterException(InvalidRequesterException.InvalidRequestMessage);
 
-                var manager = await this.requesterQueryRepository.FindByManagerId(request.ManagerId);
+                var manager = await this.requesterQueryRepository
+                    .FindByManagerId(request.ManagerId);
 
-                var team = await this.requesterQueryRepository.FindByTeamName(request.TeamName);
+                var team = await this.requesterQueryRepository
+                    .FindByTeamName(request.TeamName);
 
                 requester.Employee
                     .UpdateFirstName(request.FirstName)

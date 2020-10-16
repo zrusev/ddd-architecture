@@ -18,8 +18,7 @@
 
             public async Task<RequesterOutputModel> Handle(
                 RequsterDetailsQuery request,
-                CancellationToken cancellationToken
-                )
+                CancellationToken cancellationToken)
                 => await this.requesterQueryRepository.GetDetails(request.Id, cancellationToken);
         }
     }

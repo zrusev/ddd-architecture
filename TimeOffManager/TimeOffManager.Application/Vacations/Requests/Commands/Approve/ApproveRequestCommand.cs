@@ -26,12 +26,7 @@
         public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand, Result>
         {
             private static bool IsDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
-
-            private const string InvalidApproverMessage = "You are not allowed to approve this request.";
-            private const string DuplicateApprovalMessage = "This request has already been approved.";
-            private const string RequestSubject = "Request approval";
-            private const string RequestBody = "Your request has been ";
-
+            
             private readonly ICurrentUser currentUser;
             private readonly IRequesterQueryRepository requesterQueryRepository;
             private readonly IRequestQueryRepository requestQueryRepository;
@@ -66,19 +61,19 @@
             {
                 var approver = await this.requesterQueryRepository.FindByUser(
                     this.currentUser.UserId,
-                    cancellationToken);
+                    cancellationToken)
+                    ?? throw new InvalidApproverException(InvalidApproverException.InvalidApproverTokenMessage);
 
                 var requestDetails = await this.requestQueryRepository.GetRequest(
                     request.Id,
-                    cancellationToken);
-
-                
+                    cancellationToken)
+                    ?? throw new InvalidRequestException(string.Format(InvalidRequestException.InvalidRequestMessage, request.Id));
 
                 if (requestDetails.ApproverId != approver.Id && !IsDevelopment)
-                    throw new InvalidApproverException(InvalidApproverMessage);
+                    throw new InvalidApproverException(InvalidApproverException.InvalidApproverMessage);
 
                 if (requestDetails.Options.IsApproved)
-                    throw new InvalidApproverException(DuplicateApprovalMessage);
+                    throw new InvalidApproverException(InvalidApproverException.DuplicateApprovalMessage);
 
                 var requester = await this.requesterQueryRepository.GetRequesterByRequestId(
                     request.Id,
@@ -134,9 +129,8 @@
                     new MailOutputModel(
                         requester.Employee.FirstName + " " + requester.Employee.LastName,
                         requester.Employee.Email,
-                        RequestSubject,
-                        RequestBody + (request.IsApproved ? "approved" : "rejected")
-                        ));
+                        MailOutputModel.ApproveCommandRequestSubject,
+                        MailOutputModel.ApproveCommandRequestBody + (request.IsApproved ? "approved" : "rejected")));
 
                 return Result.Success;
             }

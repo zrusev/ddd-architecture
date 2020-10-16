@@ -2,6 +2,11 @@
 {
     public class MailOutputModel
     {
+        public const string ApproveCommandRequestSubject = "Request approval";
+        public const string ApproveCommandRequestBody = "Your request has been ";
+        public const string CreateCommandRequestSubject = "Request approval";
+        public const string CreateCommandRequestBody = "Please approve this request";
+
         public MailOutputModel(
             string name,
             string email,
